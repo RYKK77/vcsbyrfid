@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryk.vcsbyrfid.mapper.VcsRfidMapper">
+
+    <resultMap id="BaseResultMap" type="com.ryk.vcsbyrfid.model.entity.VcsRfid">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="checkCode" column="check_code" jdbcType="VARCHAR"/>
+            <result property="validDate" column="valid_date" jdbcType="TIMESTAMP"/>
+            <result property="isValid" column="is_valid" jdbcType="TINYINT"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="nvehicleId" column="nvehicle_id" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,check_code,valid_date,
+        is_valid,created_time,updated_time,
+        user_id,nvehicle_id
+    </sql>
+</mapper>

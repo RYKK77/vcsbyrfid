@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryk.vcsbyrfid.mapper.VcsRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.ryk.vcsbyrfid.model.entity.VcsRecord">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+            <result property="deviceId" column="device_id" jdbcType="BIGINT"/>
+            <result property="nvehicleId" column="nvehicle_id" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,type,created_time,
+        device_id,nvehicle_id
+    </sql>
+</mapper>

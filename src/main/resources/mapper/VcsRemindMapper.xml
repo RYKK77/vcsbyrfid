@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryk.vcsbyrfid.mapper.VcsRemindMapper">
+
+    <resultMap id="BaseResultMap" type="com.ryk.vcsbyrfid.model.entity.VcsRemind">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="remindUserId" column="remind_user_id" jdbcType="BIGINT"/>
+            <result property="remindContent" column="remind_content" jdbcType="VARCHAR"/>
+            <result property="remindTime" column="remind_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,remind_user_id,
+        remind_content,remind_time
+    </sql>
+</mapper>
