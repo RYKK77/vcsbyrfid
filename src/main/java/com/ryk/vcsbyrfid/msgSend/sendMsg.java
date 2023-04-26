@@ -1,35 +1,30 @@
-package com.ryk.vcsbyrfid;
+package com.ryk.vcsbyrfid.msgSend;
 
-import com.github.sarxos.webcam.Webcam;
-import com.google.gson.Gson;
-import com.ryk.vcsbyrfid.model.entity.LicensePlate;
+
+import com.ryk.vcsbyrfid.common.ResultUtils;
 import com.ryk.vcsbyrfid.utils.HttpUtils;
+import io.swagger.models.auth.In;
 import org.apache.http.HttpResponse;
-import org.apache.http.util.EntityUtils;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.Base64;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+
+/**
+ * 发送短信
+ */
 public class sendMsg {
-    public static void main(String[] args) {
+    public String sendMegToUser(String phoneNum, String code) {
         String host = "https://gyytz.market.alicloudapi.com";
         String path = "/sms/smsSend";
         String method = "POST";
-        String appcode = "49ec0984ca244639895d3061164a5863";
+        String appcode = "xxx";
         Map<String, String> headers = new HashMap<String, String>();
         //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE " + appcode);
         Map<String, String> querys = new HashMap<String, String>();
-        querys.put("mobile", "18682543126");
-        querys.put("param", "**code**:5201314");
+        querys.put("mobile", phoneNum);
+        querys.put("param", "**code**:" + code);
 
 //smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
 
@@ -50,8 +45,10 @@ public class sendMsg {
             System.out.println(response.toString());
             //获取response的body
             //System.out.println(EntityUtils.toString(response.getEntity()));
+            return response.toString();
         } catch (Exception e) {
             e.printStackTrace();
+            return "false";
         }
     }
 }

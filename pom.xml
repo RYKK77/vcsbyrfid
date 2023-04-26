@@ -160,7 +160,7 @@
             <artifactId>webcam-capture</artifactId>
             <version>0.3.12</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
+        <!-- 访问DLL动态链接库所需依赖 -->
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>

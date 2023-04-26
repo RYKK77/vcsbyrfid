@@ -1,4 +1,4 @@
-package com.ryk.vcsbyrfid;
+package com.ryk.vcsbyrfid.licenseCatch;
 
 import com.github.sarxos.webcam.Webcam;
 import com.google.gson.Gson;
@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 获取摄像头图片并识别车牌并返回
+ */
 public class LicensePlateRecognition {
     private static final int WIDTH = 640; // 拍照宽度
     private static final int HEIGHT = 480; // 拍照高度
@@ -54,11 +57,11 @@ public class LicensePlateRecognition {
         return base64;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static LicensePlate getLicense() throws IOException {
         String host = "https://api03.aliyun.venuscn.com";
         String path = "/ocr/car-license";
         String method = "POST";
-        String appcode = "49ec0984ca244639895d3061164a5863";
+        String appcode = "xxx";
         Map<String, String> headers = new HashMap<String, String>();
         //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE " + appcode);
@@ -90,67 +93,11 @@ public class LicensePlateRecognition {
             LicensePlate myResponse = gson.fromJson(json, LicensePlate.class);
 
             System.out.println("车牌信息:"+myResponse.getData().getNumber() + " " + myResponse.getData().getColor());
+            return myResponse;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        /*
-        // 加载OpenCV库
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        
-        // 创建一个新的VideoCapture对象来读取默认摄像头
-        VideoCapture cap = new VideoCapture("HD Camera");
-        if (!cap.isOpened()) {
-            System.out.println("无法打开摄像头！");
-            return;
-        }
-        
-        // 设置摄像头分辨率
-        cap.set(Videoio.CAP_PROP_FRAME_WIDTH, 1280);
-        cap.set(Videoio.CAP_PROP_FRAME_HEIGHT, 720);
-        
-        // 创建一个新的Tesseract对象来执行OCR
-        Tesseract tesseract = new Tesseract();
-        tesseract.setDatapath("tessdata"); // 设置Tesseract数据目录的路径
-        
-        // 循环直到用户按下 'q' 键退出
-        while (true) {
-            // 从摄像头读取新的帧
-            Mat frame = new Mat();
-            if (!cap.read(frame)) {
-                System.out.println("无法读取摄像头帧！");
-                break;
-            }
-            
-            // TODO: 执行车牌检测和裁剪
-//            Mat plateImage = frame(Rect(left, top, width, height));
 
-            // 将裁剪后的车牌保存为临时图像文件
-            Imgcodecs.imwrite("temp.jpg", frame);
-            
-            // 对车牌图像执行OCR
-            String plateNumber = null;
-            try {
-                plateNumber = tesseract.doOCR(new File("temp.jpg"));
-            } catch (TesseractException e) {
-                e.printStackTrace();
-            }
-            
-            // 输出识别出的车牌号码
-            System.out.println("车牌号码: " + plateNumber);
-            
-
-            
-            // 等待一段时间以避免高CPU使用率
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        // 释放摄像头并清理资源
-        cap.release();
-        System.out.println("完成！");
-        */
     }
 }

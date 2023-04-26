@@ -1,32 +1,34 @@
 package com.ryk.vcsbyrfid.rfid.UHF;
 
 import com.ryk.vcsbyrfid.rfid.dll.JNARfidDll;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UHFReader {
     private byte[] ComAddr = new byte[1];//读写器地址
-    public long[] FrmHandle = new long[1];//读写器句柄
-    long Recv = 0;
-    long fComAddr = 0;
-    public long[] CardNum = new long[1];
+    public int[] FrmHandle = new int[1];//读写器句柄
+    int Recv = 0;
+    int fComAddr = 0;
+    public int[] CardNum = new int[1];
 
     //打开设备;ComPort:串口号，ComAddr：读写器地址;baudRate：波特率;
-    public long OpenByCom(long ComPort, byte baudRate) {
+    public int OpenByCom(int ComPort, byte baudRate) {
         byte[] comm = new byte[1];
         comm[0] = (byte) 255;
-        long[] Handle = new long[1];
-        Recv = JNARfidDll.jnaDll.OpenComPort(ComPort, comm, baudRate, Handle);
-        if (Recv == 0) {
+        int[] Handle = new int[1];
+        int Recv1 = JNARfidDll.jnaDll.OpenComPort(ComPort, comm, baudRate, Handle);
+        if (Recv1 == 0) {
             ComAddr = comm;
             FrmHandle = Handle;
         } else {
             fComAddr = 255;
             FrmHandle[0] = -1;
         }
-        return Recv;
+        return Recv1;
     }
 
     //关闭设备,FrmHandle设备句柄;
-    public long CloseByCom() {
+    public int CloseByCom() {
         return JNARfidDll.jnaDll.CloseSpecComPort(FrmHandle[0]);
     }
 
@@ -53,7 +55,7 @@ public class UHFReader {
     //询查EPC标签
     public String[] Inventory() {
         byte[] StrBuff = new byte[5000];
-        long[] Totallen = new long[1];//接收输出的EPClenand 字节数量
+        int[] Totallen = new int[1];//接收输出的EPClenand 字节数量
         CardNum[0] = 0;//接收输出的EPC的总数量
         byte AdrTID = 0;
         byte LenTID = 6;
@@ -63,7 +65,7 @@ public class UHFReader {
         byte Scantime = 10;
         byte FastFlag = 1;
         byte[] UInAnt = new byte[1];
-        long[] UTotallen = new long[1];
+        int[] UTotallen = new int[1];
         byte[] MaskAdr = new byte[2];
         MaskAdr[0] = 0;
         byte[] MaskData = new byte[100];
@@ -89,7 +91,7 @@ public class UHFReader {
                     }
                     EPCstr += hex;
                 }
-                long rssi = StrBuff[m++];
+                int rssi = StrBuff[m++];
                 EPC[index] = EPCstr.toUpperCase();
                 //System.out.println(EPCstr.toUpperCase());
             }
@@ -100,7 +102,7 @@ public class UHFReader {
     }
 
     //设置功率,Power功率
-    public long SetPower(long Power) {
+    public int SetPower(int Power) {
         byte[] power = new byte[1];
         power[0] = (byte) Power;
         Recv = JNARfidDll.jnaDll.SetPowerDbm(ComAddr, power, FrmHandle[0]);
@@ -108,9 +110,9 @@ public class UHFReader {
     }
 
     //设置读写器工作频率
-    public long SetRegion(long band) {
-        long maxfr = ((band & 0x0c) << 4);
-        long minfr = (((band & 3) << 6));
+    public int SetRegion(int band) {
+        int maxfr = ((band & 0x0c) << 4);
+        int minfr = (((band & 3) << 6));
         byte[] MaxFres = new byte[1];
         MaxFres[0] = (byte) maxfr;
         byte[] MixFres = new byte[1];
@@ -120,7 +122,7 @@ public class UHFReader {
     }
 
     //设置读写器波特率
-    public long SetBaudRate(byte BaudRate) {
+    public int SetBaudRate(byte BaudRate) {
         byte[] baudRate = new byte[1];
         baudRate[0] = BaudRate;
         return JNARfidDll.jnaDll.SetBaudRate(ComAddr, baudRate, FrmHandle[0]);
@@ -157,11 +159,11 @@ public class UHFReader {
     }
 
     //写数据,EPC号，WordPtr写入地址，Num写入长度，Data写入数据,Mem写入区域，Psd访问密码
-    public long WriteData(String EPC, byte WordPtr, byte Num, byte[] Data, byte Mem, byte[] Psd) {
+    public int WriteData(String EPC, byte WordPtr, byte Num, byte[] Data, byte Mem, byte[] Psd) {
         int len = EPC.length() / 2;
         byte[] epc_arr = new byte[len];
         epc_arr = stringToByte(EPC);
-        long wnum = Num * 2;
+        int wnum = Num * 2;
         byte[] WrittenDataNum = new byte[1];
         byte[] errorcode = new byte[1];
         byte ENum = 0;
@@ -170,14 +172,14 @@ public class UHFReader {
         byte[] MaskData = new byte[1];
         MaskData[0] = 0;
         byte Writedatalen = (byte) Data.length;//X
-        long WrittemDataNum = 0;//X
+        int WrittemDataNum = 0;//X
         Recv = JNARfidDll.jnaDll.WriteCard_G2(ComAddr, epc_arr, Mem, WordPtr, Writedatalen, Data,
                 Psd, WrittemDataNum, (byte) epc_arr.length, errorcode, FrmHandle[0]);
         return Recv;
     }
 
     //写数据,EPC号，，Psd访问密码
-    public long WriteEPC(String EPC, String Psd) {
+    public int WriteEPC(String EPC, String Psd) {
 //    	//计算PC值(用于控制读取显示EPC长度)
 //    	long m, n;
 //        n = EPC.length();
@@ -188,7 +190,7 @@ public class UHFReader {
 //            EPC = Integer.toHexString(m)+"00"+EPC;
 //            //EPC = Convert.ToString(m, 16).PadLeft(2, '0') + "00";
 //        }
-        long result = 0;
+        int result = 0;
         byte len = (byte) (EPC.length() / 4);//EPC字长度
         if (len % 2 != 0)//保证len为偶数
             len++;
