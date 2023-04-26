@@ -23,7 +23,7 @@ public interface JNARfidDll extends Library {
     int SetBaudRate(byte[] ConAddr, byte[] baud, int PortHandle);//V
 
     int ReadCard_G2(byte[] comAddr, byte[] EPC, byte Mem, byte WordPtr, byte Num, byte[] Password,
-                    byte[] Data, byte EPClength, byte[] Errorcode, int PortHandle);//V
+                    byte[] Data, byte EPClength, int[] Errorcode, int PortHandle);//V
 
     int WriteCard_G2(byte[] comAddr, byte[] EPC, byte Mem, byte WordPtr, byte Writedatalen, byte[] Wdt,
                      byte[] Password, int WrittemDataNum, byte EPClength, byte[] Errorcode, int PortHandle);//V
