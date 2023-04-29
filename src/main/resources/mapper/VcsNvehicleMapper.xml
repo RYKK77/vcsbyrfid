@@ -6,18 +6,19 @@
 
     <resultMap id="BaseResultMap" type="com.ryk.vcsbyrfid.model.entity.VcsNvehicle">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="carNumber" column="car_number" jdbcType="VARCHAR"/>
+            <result property="carNumber" column="carNumber" jdbcType="VARCHAR"/>
             <result property="state" column="state" jdbcType="INTEGER"/>
-            <result property="useRange" column="use_range" jdbcType="VARCHAR"/>
-            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
-            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
-            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
-            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="useRange" column="useRange" jdbcType="VARCHAR"/>
+            <result property="isDeleted" column="isDeleted" jdbcType="TINYINT"/>
+            <result property="createdTime" column="createdTime" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updatedTime" jdbcType="TIMESTAMP"/>
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
+            <result property="mold" column="mold" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,car_number,state,
-        use_range,is_deleted,created_time,
-        updated_time,user_id
+        id,carNumber,state,
+        useRange,isDeleted,createdTime,
+        updatedTime,userId,mold
     </sql>
 </mapper>

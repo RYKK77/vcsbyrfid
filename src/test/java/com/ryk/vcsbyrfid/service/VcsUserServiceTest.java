@@ -24,8 +24,8 @@ public class VcsUserServiceTest {
         String userPassword = "12345678";
         String checkPassword = "12345678";
         String phoneNum = "18888888888";
-        String mailAccount = "XXXX@163.com";
-        long result = vcsUserService.userRegister(userAccount, phoneNum, mailAccount, userPassword, checkPassword);
+        String mail = "XXXX@163.com";
+        long result = vcsUserService.userRegister(userAccount, "wangweu:",1, phoneNum, mail, userPassword, checkPassword);
         System.out.println(result);
     }
 }

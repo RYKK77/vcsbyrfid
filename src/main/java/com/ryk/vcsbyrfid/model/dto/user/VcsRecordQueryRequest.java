@@ -1,25 +1,22 @@
-package com.ryk.vcsbyrfid.model.entity;
+package com.ryk.vcsbyrfid.model.dto.user;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.ryk.vcsbyrfid.common.PageRequest;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 记录
- * @TableName vcs_record
+ * 用户查询请求
+ *
+ * @author ryk
+ * @from  
  */
-@TableName(value ="vcs_record")
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class VcsRecord implements Serializable {
-    /**
-     * 记录ID
-     */
-    @TableId
-    private Long id;
+public class VcsRecordQueryRequest extends PageRequest implements Serializable {
 
     /**
      * 记录类型
@@ -45,6 +42,6 @@ public class VcsRecord implements Serializable {
      * 用户ID
      */
     private Long userId;
-    @TableField(exist = false)
+
     private static final long serialVersionUID = 1L;
 }

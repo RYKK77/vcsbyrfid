@@ -1,7 +1,7 @@
 package com.ryk.vcsbyrfid.mapper;
 
-import com.ryk.vcsbyrfid.model.entity.VcsRfid;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ryk.vcsbyrfid.model.entity.VcsRfid;
 
 /**
 * @author RYKK

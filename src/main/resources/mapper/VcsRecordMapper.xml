@@ -7,13 +7,14 @@
     <resultMap id="BaseResultMap" type="com.ryk.vcsbyrfid.model.entity.VcsRecord">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="type" column="type" jdbcType="INTEGER"/>
-            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
-            <result property="deviceId" column="device_id" jdbcType="BIGINT"/>
-            <result property="nvehicleId" column="nvehicle_id" jdbcType="BIGINT"/>
+            <result property="createdTime" column="createdTime" jdbcType="TIMESTAMP"/>
+            <result property="deviceId" column="deviceId" jdbcType="BIGINT"/>
+            <result property="nvehicleId" column="nvehicleId" jdbcType="BIGINT"/>
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,type,created_time,
-        device_id,nvehicle_id
+        id,type,createdTime,
+        deviceId,nvehicleId,userId
     </sql>
 </mapper>

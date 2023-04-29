@@ -1,7 +1,9 @@
 package com.ryk.vcsbyrfid.model.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
@@ -16,50 +18,42 @@ public class VcsRfid implements Serializable {
     /**
      * 信息ID
      */
-//    @TableId(value = "id")
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
      * 校验码
      */
-//    @TableField(value = "check_code")
     private String checkCode;
 
     /**
      * 有效期
      */
-//    @TableField(value = "valid_date")
     private Date validDate;
 
     /**
      * 是否有效
      */
-    @TableLogic
-    @TableField(value = "is_valid")
     private Integer isValid;
 
     /**
      * 创建时间
      */
-//    @TableField(value = "created_time")
     private Date createdTime;
 
     /**
      * 更新时间
      */
-//    @TableField(value = "updated_time")
     private Date updatedTime;
 
     /**
      * 用户ID
      */
-//    @TableField(value = "user_id")
     private Long userId;
 
     /**
      * 车辆ID
      */
-//    @TableField(value = "nvehicle_id")
     private Long nvehicleId;
 
     @TableField(exist = false)

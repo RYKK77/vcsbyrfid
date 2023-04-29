@@ -1,22 +1,22 @@
-package com.ryk.vcsbyrfid.model.entity;
+package com.ryk.vcsbyrfid.model.vo;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 车辆
+ * 车辆(脱敏）
  * @TableName vcs_nvehicle
  */
-@TableName(value ="vcs_nvehicle")
 @Data
-public class VcsNvehicle implements Serializable {
+public class VcsNvehicleVO implements Serializable {
     /**
      * 车辆ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -26,44 +26,27 @@ public class VcsNvehicle implements Serializable {
 
     /**
      * 车辆状态
-     * 0-正常使用
-     * 1-放假长时间停留
-     * 2-闲置在校
      */
     private Integer state;
 
     /**
      * 正常使用时段
      */
+//    @TableField(value = "use_range")
     private String useRange;
 
-    /**
-     * 是否删除
-     */
-    @TableLogic
-    private Integer isDeleted;
 
     /**
      * 创建时间
      */
     private Date createdTime;
 
-    /**
-     * 更新时间
-     */
-    private Date updatedTime;
 
     /**
      * 用户ID
      */
+//    @TableField(value = "user_id")
     private Long userId;
 
-
-    /**
-     * 车辆类型
-     */
-    private String mold;
-
-    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

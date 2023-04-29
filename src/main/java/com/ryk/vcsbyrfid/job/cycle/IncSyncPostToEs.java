@@ -1,16 +1,8 @@
 package com.ryk.vcsbyrfid.job.cycle;
 
-import com.ryk.vcsbyrfid.mapper.PostMapper;
-import com.ryk.vcsbyrfid.model.entity.Post;
-import com.ryk.vcsbyrfid.esdao.PostEsDao;
-import com.ryk.vcsbyrfid.model.dto.post.PostEsDTO;
 
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 
 /**
@@ -24,12 +16,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Slf4j
 public class IncSyncPostToEs {
 
-    @Resource
-    private PostMapper postMapper;
-
-    @Resource
-    private PostEsDao postEsDao;
-
     /**
      * 每分钟执行一次
      */
@@ -37,22 +23,5 @@ public class IncSyncPostToEs {
     public void run() {
         // 查询近 5 分钟内的数据
         Date fiveMinutesAgoDate = new Date(new Date().getTime() - 5 * 60 * 1000L);
-        List<Post> postList = postMapper.listPostWithDelete(fiveMinutesAgoDate);
-        if (CollectionUtils.isEmpty(postList)) {
-            log.info("no inc post");
-            return;
-        }
-        List<PostEsDTO> postEsDTOList = postList.stream()
-                .map(PostEsDTO::objToDto)
-                .collect(Collectors.toList());
-        final int pageSize = 500;
-        int total = postEsDTOList.size();
-        log.info("IncSyncPostToEs start, total {}", total);
-        for (int i = 0; i < total; i += pageSize) {
-            int end = Math.min(i + pageSize, total);
-            log.info("sync from {} to {}", i, end);
-            postEsDao.saveAll(postEsDTOList.subList(i, end));
-        }
-        log.info("IncSyncPostToEs end, total {}", total);
     }
 }

@@ -1,22 +1,22 @@
-package com.ryk.vcsbyrfid.model.entity;
+package com.ryk.vcsbyrfid.model.vo;
 
-import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 
- * @TableName vcs_user
- */
-@TableName(value ="vcs_user")
+ * 已登录用户视图（脱敏）
+ *
+ * @author ryk
+ * @from  
+ **/
 @Data
-public class VcsUser implements Serializable {
+public class VcsLoginUserVO implements Serializable {
+
     /**
      * 用户ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -34,10 +34,6 @@ public class VcsUser implements Serializable {
      */
     private String mail;
 
-    /**
-     * 用户密码
-     */
-    private String password;
 
     /**
      * 用户手机号
@@ -49,25 +45,16 @@ public class VcsUser implements Serializable {
      */
     private Integer role;
 
-    /**
-     * 是否删除
-     */
-    @TableLogic
-    @TableField(value = "is_deleted")
-    private Integer isDeleted;
 
     /**
      * 创建时间
      */
-    @TableField(value = "created_time")
     private Date createdTime;
 
     /**
      * 更新时间
      */
-    @TableField(value = "updated_time")
     private Date updatedTime;
 
-    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

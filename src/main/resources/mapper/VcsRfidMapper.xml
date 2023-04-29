@@ -6,18 +6,18 @@
 
     <resultMap id="BaseResultMap" type="com.ryk.vcsbyrfid.model.entity.VcsRfid">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="checkCode" column="check_code" jdbcType="VARCHAR"/>
-            <result property="validDate" column="valid_date" jdbcType="TIMESTAMP"/>
-            <result property="isValid" column="is_valid" jdbcType="TINYINT"/>
-            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
-            <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
-            <result property="userId" column="user_id" jdbcType="BIGINT"/>
-            <result property="nvehicleId" column="nvehicle_id" jdbcType="BIGINT"/>
+            <result property="checkCode" column="checkCode" jdbcType="VARCHAR"/>
+            <result property="validDate" column="validDate" jdbcType="TIMESTAMP"/>
+            <result property="isValid" column="isValid" jdbcType="TINYINT"/>
+            <result property="createdTime" column="createdTime" jdbcType="TIMESTAMP"/>
+            <result property="updatedTime" column="updatedTime" jdbcType="TIMESTAMP"/>
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
+            <result property="nvehicleId" column="nvehicleId" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,check_code,valid_date,
-        is_valid,created_time,updated_time,
-        user_id,nvehicle_id
+        id,checkCode,validDate,
+        isValid,createdTime,updatedTime,
+        userId,nvehicleId
     </sql>
 </mapper>
