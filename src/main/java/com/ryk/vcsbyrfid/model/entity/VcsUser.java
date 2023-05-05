@@ -46,6 +46,14 @@ public class VcsUser implements Serializable {
 
     /**
      * 用户角色
+     * 0-系统管理员
+     * 1-监控中心人员
+     * 2-普通师生
+     * 3-具有高级进出权限的师生
+     * 4-校内普通职工
+     * 5-校内商家
+     * 6-普通访客
+     * 7-具有高级进出权限的访客
      */
     private Integer role;
 

@@ -13,6 +13,6 @@ import java.io.Serializable;
 //@TableName(value = "user")
 @Data
 public class LicensePlatePro implements Serializable {
-    private String number;
-    private String color;
+    public String number;
+    public String color;
 }

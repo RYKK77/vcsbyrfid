@@ -1,15 +1,20 @@
 package com.ryk.vcsbyrfid.rfid.UHF;
 
 import com.ryk.vcsbyrfid.rfid.dll.JNARfidDll;
+import lombok.Data;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UHFReader {
-    private byte[] ComAddr = new byte[1];//读写器地址
-    public int[] FrmHandle = new int[1];//读写器句柄
-    int Recv = 0;
-    int fComAddr = 0;
-    public int[] CardNum = new int[1];
+
+    static private byte[] ComAddr = new byte[1];//读写器地址
+    static public int[] FrmHandle = new int[1];//读写器句柄
+    static int Recv = 0;
+    static int fComAddr = 0;
+    static public int[] CardNum = new int[1];
+
+    static int status = 0;//0-可读  1-不可读
+
 
 
     /**
@@ -49,6 +54,7 @@ public class UHFReader {
         }
         return sb.toString().toUpperCase();
     }
+
 
     public byte[] stringToByte(String str) {
         byte[] b = new byte[str.length() / 2];
@@ -226,5 +232,12 @@ public class UHFReader {
         Recv = JNARfidDll.jnaDll.WriteEPC_G2(ComAddr, Psds, epc_arr, len, errorcode, FrmHandle[0]);
         result = Recv;
         return result;
+    }
+
+    public int getStatues() {
+        return status;
+    }
+    public void setStatus(int newStatus) {
+        status = newStatus;
     }
 }

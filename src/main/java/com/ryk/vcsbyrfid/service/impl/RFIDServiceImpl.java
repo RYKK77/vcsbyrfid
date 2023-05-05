@@ -16,34 +16,29 @@ public class RFIDServiceImpl implements RFIDService {
     @Resource
     private UHFReader uhfReader;
 
-//    public RFIDServiceImpl() {
-//        int i = uhfReader.OpenByCom(6, (byte) 5);
-//        if (i == 0) {
-//            System.out.println("Connect Successfully!");
-//        }
-//    }
-//    //重写finalize方法
-//    @Override
-//    protected void finalize() throws Throwable {
-//        super.finalize();
-//        int l = uhfReader.CloseByCom();
-//        if (l == 0) {
-//            System.out.println("Close Successfully!");
-//        }
-//    }
 
     @Override
     public boolean writeRFIDTag(String license) {
-
-        int i = uhfReader.OpenByCom(6, (byte) 5);
+        String paddedStr = String.format("%1$8s", license).replace(' ', '0');
+        uhfReader.setStatus(1);//避免冲突，使设备当前不可读
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //写当前标签ID,后面加上0000CDCD
-        int k = uhfReader.WriteEPC(license + "0000CDCD", "0");
+        int k = uhfReader.WriteEPC(paddedStr + "0000CDCD", "0");
         if (k == 0) {
             System.out.println("WriteEPC Successfully!");
-            int l = uhfReader.CloseByCom();
+//            uhfReader.Inventory();
+            try {
+                Thread.sleep(2000);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            uhfReader.setStatus(0);//恢复可读状态
             return true;
         }
-        int l = uhfReader.CloseByCom();
         return false;
     }
 

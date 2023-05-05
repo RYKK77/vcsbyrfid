@@ -27,11 +27,10 @@ public class UHFReaderTest {
 
         //写当前标签ID,后面加上0000CDCD
         int k = uhfReader.WriteEPC("CDAB959B0000CDCD", "0");
-
         String[] inventory = uhfReader.Inventory();
 
         System.out.println(inventory[0]);
-        System.out.println(inventory[1]);
+//        System.out.println(inventory[1]);
         int l = uhfReader.CloseByCom();
         if (i == 0) {
             System.out.println("Connect Successfully!");

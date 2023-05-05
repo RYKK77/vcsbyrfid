@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
  * @from  
  */
 // todo 取消注释开启任务
-//@Component
+@Component
 @Slf4j
-public class FullSyncPostToEs implements CommandLineRunner {
+public class OpenCom implements CommandLineRunner {
 
 
     @Resource

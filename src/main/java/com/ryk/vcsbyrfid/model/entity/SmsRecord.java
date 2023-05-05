@@ -12,9 +12,9 @@ import java.io.Serializable;
  */
 //@TableName(value = "user")
 @Data
-public class LicensePlate implements Serializable {
-    public int ret;
+public class SmsRecord implements Serializable {
     public String msg;
-    public String log_id;
-    public LicensePlatePro data;
+    public String smsid;
+    public Integer code;
+    public String balance;
 }

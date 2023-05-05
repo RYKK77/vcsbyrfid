@@ -16,7 +16,7 @@ public class VcsNvehicle implements Serializable {
     /**
      * 车辆ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**

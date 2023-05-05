@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
+import static com.ryk.vcsbyrfid.constant.CommonConstant.SEND_CODE_TEMPLATE_ID;
 import static com.ryk.vcsbyrfid.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -51,7 +52,7 @@ public class VcsCodeServiceImpl extends ServiceImpl<VcsCodeMapper, VcsCode>
         code.setCode(codeNum);
         this.save(code);
         SendMsg sendMsg = new SendMsg();
-        sendMsg.sendMegToUser(phone, codeNum.toString());
+        sendMsg.sendMegToUser(phone, SEND_CODE_TEMPLATE_ID, codeNum.toString(), null, null, null);
         return true;
     }
 

@@ -8,10 +8,13 @@ import com.ryk.vcsbyrfid.constant.CommonConstant;
 import com.ryk.vcsbyrfid.exception.BusinessException;
 import com.ryk.vcsbyrfid.mapper.VcsUserMapper;
 import com.ryk.vcsbyrfid.model.dto.user.VcsUserQueryRequest;
+import com.ryk.vcsbyrfid.model.entity.VcsNvehicle;
 import com.ryk.vcsbyrfid.model.entity.VcsUser;
 import com.ryk.vcsbyrfid.model.vo.VcsLoginUserVO;
+import com.ryk.vcsbyrfid.model.vo.VcsNvehicleVO;
 import com.ryk.vcsbyrfid.model.vo.VcsUserVO;
 import com.ryk.vcsbyrfid.msgSend.SendMsg;
+import com.ryk.vcsbyrfid.service.VcsNvehicleService;
 import com.ryk.vcsbyrfid.service.VcsUserService;
 import com.ryk.vcsbyrfid.utils.SqlUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +23,15 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.ryk.vcsbyrfid.constant.CommonConstant.SEND_WARNING_TEMPLATE_ID;
 import static com.ryk.vcsbyrfid.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -35,6 +42,9 @@ import static com.ryk.vcsbyrfid.constant.UserConstant.USER_LOGIN_STATE;
 @Service
 @Slf4j
 public class VcsUserServiceImpl extends ServiceImpl<VcsUserMapper, VcsUser> implements VcsUserService {
+
+    @Resource
+    private VcsNvehicleService vcsNvehicleService;
     /**
      * 盐值，混淆密码
      */
@@ -236,7 +246,20 @@ public class VcsUserServiceImpl extends ServiceImpl<VcsUserMapper, VcsUser> impl
     public Boolean sendWarningMsg(String id, String msg) {
         VcsUser user = this.getById(id);
         SendMsg sendMsg = new SendMsg();
-        sendMsg.sendMegToUser(user.getPhone(), msg);
+        SimpleDateFormat sdf = new SimpleDateFormat();// 格式化时间
+        sdf.applyPattern("yyyy-MM-dd HH:mm:ss a");// a为am/pm的标记
+        Date date = new Date();// 获取当前时间
+
+        QueryWrapper<VcsNvehicle> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userId", id);
+        List<VcsNvehicle> vcsNvehicleList = vcsNvehicleService.list(queryWrapper);
+        if (vcsNvehicleList.size() == 0) {
+            return false;
+        }
+        VcsNvehicle vcsNvehicle = vcsNvehicleList.get(0);
+        String carNumber = vcsNvehicle.getCarNumber();
+
+        sendMsg.sendMegToUser(user.getPhone(), SEND_WARNING_TEMPLATE_ID, null, sdf.format(date), "西门",carNumber);
         return true;
     }
 

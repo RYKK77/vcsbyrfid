@@ -149,10 +149,6 @@ public class VcsVehicleController {
         if (recordQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-//        if (!vcsUserService.isAdmin(request)) {
-//            //管理员鉴权
-//            return ResultUtils.error(ErrorCode.NO_AUTH_ERROR);
-//        }
         long current = recordQueryRequest.getCurrent();
         long pageSize = recordQueryRequest.getPageSize();
         Page<VcsRecord> recordPage = vcsRecordService.page(new Page<>(current, pageSize),

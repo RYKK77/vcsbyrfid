@@ -9,6 +9,7 @@ import com.ryk.vcsbyrfid.service.VcsRfidService;
 import com.ryk.vcsbyrfid.mapper.VcsRfidMapper;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
@@ -20,6 +21,8 @@ import java.util.Date;
 @Service
 public class VcsRfidServiceImpl extends ServiceImpl<VcsRfidMapper, VcsRfid>
     implements VcsRfidService{
+    @Resource
+    public RFIDServiceImpl rfidService;
 
     @Override
     public Long generateRfidTag(VcsRfidAddRequest vcsRfidAddRequest, HttpServletRequest request) {
@@ -32,6 +35,7 @@ public class VcsRfidServiceImpl extends ServiceImpl<VcsRfidMapper, VcsRfid>
         vcsRfid.setUserId(userId);
         boolean result = this.save(vcsRfid);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        rfidService.writeRFIDTag(nvehicleId.toString());
         return vcsRfid.getId();
     }
 }
