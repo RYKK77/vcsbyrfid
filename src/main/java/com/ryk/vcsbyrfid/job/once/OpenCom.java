@@ -28,6 +28,11 @@ public class OpenCom implements CommandLineRunner {
         int i = uhfReader.OpenByCom(6, (byte) 5);
         if (i == 0) {
             System.out.println("Connect Successfully!");
+            log.info("【系统操作】连接RFID检测器成功！");
+        }
+        if (i != 0) {
+            System.out.println("Connect failure!");
+            log.info("【系统操作】连接RFID检测器失败！");
         }
     }
 }

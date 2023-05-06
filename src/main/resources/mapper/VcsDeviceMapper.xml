@@ -6,15 +6,17 @@
 
     <resultMap id="BaseResultMap" type="com.ryk.vcsbyrfid.model.entity.VcsDevice">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="dname" column="dName" jdbcType="VARCHAR"/>
+            <result property="dName" column="dName" jdbcType="VARCHAR"/>
             <result property="longitude" column="longitude" jdbcType="VARCHAR"/>
             <result property="latitude" column="latitude" jdbcType="VARCHAR"/>
-            <result property="isValid" column="is_valid" jdbcType="TINYINT"/>
-            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+            <result property="isValid" column="isValid" jdbcType="TINYINT"/>
+            <result property="isSecret" column="isSecret" jdbcType="TINYINT"/>
+            <result property="isDeleted" column="isDeleted" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,dName,longitude,
-        latitude,is_valid,is_deleted
+        latitude,isValid,isSecret,
+        isDeleted
     </sql>
 </mapper>

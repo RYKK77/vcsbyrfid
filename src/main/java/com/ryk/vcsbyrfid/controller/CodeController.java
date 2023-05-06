@@ -45,6 +45,7 @@ public class CodeController {
     public BaseResponse<String> sendCode(String phone) {
         Boolean result = vcsCodeService.sendVerifyCode(phone);
         if (result == true) {
+
             return ResultUtils.success("发送成功");
         }
         return ResultUtils.error(ErrorCode.NOT_FOUND_ERROR);

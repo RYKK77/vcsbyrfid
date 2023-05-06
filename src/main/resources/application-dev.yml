@@ -1,9 +1,6 @@
 spring:
   application:
     name: vcsbyrfid
-  # 默认 dev 环境
-  profiles:
-    active: dev
   # 支持 swagger3
   mvc:
     pathmatch:
@@ -23,18 +20,12 @@ spring:
     password: 1234
   # Redis 配置
   # todo 需替换配置，然后取消注释
-#  redis:
-#    database: 1
-#    host: localhost
-#    port: 6379
-#    timeout: 5000
-#    password: 123456
-  # Elasticsearch 配置
-  # todo 需替换配置，然后取消注释
-#  elasticsearch:
-#    uris: http://localhost:9200
-#    username: root
-#    password: 123456
+  #  redis:
+  #    database: 1
+  #    host: localhost
+  #    port: 6379
+  #    timeout: 5000
+  #    password: 123456
   # 文件上传
   servlet:
     multipart:
@@ -58,3 +49,18 @@ mybatis-plus:
       logic-delete-field: isDelete # 全局逻辑删除的实体字段名
       logic-delete-value: 1 # 逻辑已删除值（默认为 1）
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+logging:
+  level:
+    root: info
+  file:
+    # 默认情况下：会在项目的根目录下生成/output/logs/spring.log，默认的日志名是：spring.log
+    #    path: output/logs
+    # 如果不想把日志存放在logging.file.path目录下，可以采用name来重新定义存储的位置和日志文件的名称
+    #name: d:/output/logs/console.log
+    name: output/logs/operatingLog.log
+  pattern:
+    console: "%d{yyyy/MM/dd-HH:mm:ss} [%thread] %-5level %logger{50}- %msg%n"
+    file: "%d{yyyy/MM/dd-HH:mm:ss} %msg%n"
+  logback:
+    rollingpolicy:
+      max-file-size: 5MB

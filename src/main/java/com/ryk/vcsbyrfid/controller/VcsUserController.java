@@ -85,6 +85,7 @@ public class VcsUserController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         VcsLoginUserVO vcsLoginUserVO = vcsUserService.userLogin(userAccount, userPassword, request);
+        log.info("【用户操作】"+"用户："+ vcsLoginUserVO.getUserName()+",学号："+ vcsLoginUserVO.getSid()+"已登录");
         return ResultUtils.success(vcsLoginUserVO);
     }
 

@@ -6,8 +6,8 @@ import com.ryk.vcsbyrfid.model.entity.VcsDevice;
 /**
 * @author RYKK
 * @description 针对表【vcs_device(设备)】的数据库操作Mapper
-* @createDate 2023-04-22 22:29:05
-* @Entity com.ryk.vcsbyrfid.model.entity.VcsDevice
+* @createDate 2023-05-06 14:21:32
+* @Entity generator.domain.VcsDevice
 */
 public interface VcsDeviceMapper extends BaseMapper<VcsDevice> {
 
