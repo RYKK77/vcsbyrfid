@@ -1,6 +1,6 @@
 package com.ryk.vcsbyrfid.job.once;
 
-import com.ryk.vcsbyrfid.rfid.UHF.UHFReader;
+import com.ryk.vcsbyrfid.utils.rfid.UHF.UHFReader;
 
 import javax.annotation.Resource;
 

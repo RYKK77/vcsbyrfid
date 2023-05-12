@@ -1,4 +1,4 @@
-package com.ryk.vcsbyrfid.rfid.dll;
+package com.ryk.vcsbyrfid.utils.rfid.dll;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;

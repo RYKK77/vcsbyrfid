@@ -1,6 +1,6 @@
 package com.ryk.vcsbyrfid.service.impl;
 
-import com.ryk.vcsbyrfid.rfid.UHF.UHFReader;
+import com.ryk.vcsbyrfid.utils.rfid.UHF.UHFReader;
 import com.ryk.vcsbyrfid.service.RFIDService;
 import org.springframework.stereotype.Service;
 

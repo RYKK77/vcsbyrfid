@@ -6,7 +6,6 @@ import com.ryk.vcsbyrfid.model.entity.VcsNvehicle;
 import com.ryk.vcsbyrfid.model.entity.VcsRemind;
 import com.ryk.vcsbyrfid.model.entity.VcsRfid;
 import com.ryk.vcsbyrfid.model.entity.VcsUser;
-import com.ryk.vcsbyrfid.rfid.UHF.UHFReader;
 import com.ryk.vcsbyrfid.service.*;
 import com.ryk.vcsbyrfid.utils.SendMsg;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +61,7 @@ public class CycleDetectionForOneDay {
             long nowTimeInMillis = now.getTime();
             if (nowTimeInMillis < givenTimeInMillis) {
                 Long userId = rfid.getUserId();
-                System.out.println("用户：" + userId + "在有效期内，不需要续费");
+                log.info("用户：" + userId + "在有效期内，不需要续费");
             } else {
                 Long userId = rfid.getUserId();
                 VcsRemind vcsRemind = new VcsRemind();

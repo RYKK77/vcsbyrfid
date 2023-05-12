@@ -3,7 +3,6 @@ package com.ryk.vcsbyrfid.job.cycle;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ryk.vcsbyrfid.model.entity.*;
-import com.ryk.vcsbyrfid.rfid.UHF.UHFReader;
 import com.ryk.vcsbyrfid.service.*;
 import com.ryk.vcsbyrfid.utils.SendMsg;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import static com.ryk.vcsbyrfid.constant.CommonConstant.SEND_WARNING_NO_RECORDS_TEMPLATE_ID;
@@ -82,6 +80,7 @@ public class CycleDetectionForSevenDay {
                 vcsWarning.setDeviceId(1L);
                 vcsWarning.setWarningType("1");
                 vcsWarning.setWarningContent("您好，您的车辆已静止停车超过7天，如您已离开学校，请及时更改自己的车辆状态");
+                log.info("您好，您的车辆" + car.getCarNumber() + "已静止停车超过7天，如您已离开学校，请及时更改自己的车辆状态");
                 VcsUser user = vcsUserService.getById(car.getUserId());
                 String phone = user.getPhone();
                 sendMsg.sendMegToUser(phone, SEND_WARNING_NO_RECORDS_TEMPLATE_ID, null,

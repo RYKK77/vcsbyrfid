@@ -1,7 +1,6 @@
-package com.ryk.vcsbyrfid.rfid.UHF;
+package com.ryk.vcsbyrfid.utils.rfid.UHF;
 
-import com.ryk.vcsbyrfid.rfid.dll.JNARfidDll;
-import lombok.Data;
+import com.ryk.vcsbyrfid.utils.rfid.dll.JNARfidDll;
 import org.springframework.stereotype.Service;
 
 @Service

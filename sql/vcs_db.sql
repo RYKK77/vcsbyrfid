@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 29/04/2023 15:15:54
+ Date: 12/05/2023 14:53:54
 */
 
 SET NAMES utf8mb4;
@@ -43,14 +43,15 @@ CREATE TABLE `vcs_code`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `vcs_device`;
 CREATE TABLE `vcs_device`  (
-  `id` bigint(20) NOT NULL COMMENT '设备ID',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '设备ID',
   `dName` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '设备类型',
   `longitude` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '经度',
   `latitude` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '纬度',
-  `is_valid` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否有效',
-  `is_deleted` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否删除',
+  `isValid` tinyint(4) NOT NULL DEFAULT 1 COMMENT '是否有效',
+  `isSecret` tinyint(4) NOT NULL DEFAULT 0,
+  `isDeleted` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '设备' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '设备' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for vcs_log
@@ -77,8 +78,9 @@ CREATE TABLE `vcs_nvehicle`  (
   `updatedTime` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `userId` bigint(20) NOT NULL COMMENT '用户ID',
   `mold` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '自行车' COMMENT '车辆类型',
+  `lastPlaceId` bigint(20) NOT NULL DEFAULT 0 COMMENT '最后一次车辆记录点（以RFID设备ID标识',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1652192175800295426 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '车辆' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '车辆' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for vcs_record
@@ -99,13 +101,13 @@ CREATE TABLE `vcs_record`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `vcs_remind`;
 CREATE TABLE `vcs_remind`  (
-  `id` bigint(20) NOT NULL COMMENT '提醒ID',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '提醒ID',
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
   `remind_user_id` bigint(20) NOT NULL COMMENT '被提醒用户ID',
   `remind_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '提醒内容',
   `remind_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '提醒时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '提醒' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '提醒' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for vcs_rfid
@@ -147,11 +149,12 @@ CREATE TABLE `vcs_user`  (
 DROP TABLE IF EXISTS `vcs_warning`;
 CREATE TABLE `vcs_warning`  (
   `id` bigint(20) NOT NULL COMMENT '预警ID',
-  `warning_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '预警内容',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '预警时间',
-  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
-  `nvehicle_id` bigint(20) NOT NULL COMMENT '车辆ID',
-  `device_id` bigint(20) NOT NULL COMMENT '设备ID',
+  `warningContent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '预警内容',
+  `warningType` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '预警类型',
+  `createdTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '预警时间',
+  `userId` bigint(20) NOT NULL COMMENT '用户ID',
+  `nvehicleId` bigint(20) NOT NULL COMMENT '车辆ID',
+  `deviceId` bigint(20) NOT NULL COMMENT '设备ID',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '预警记录' ROW_FORMAT = Dynamic;
 

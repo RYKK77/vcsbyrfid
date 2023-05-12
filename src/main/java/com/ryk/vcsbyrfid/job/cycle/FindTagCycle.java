@@ -2,7 +2,7 @@ package com.ryk.vcsbyrfid.job.cycle;
 
 
 import com.ryk.vcsbyrfid.model.entity.*;
-import com.ryk.vcsbyrfid.rfid.UHF.UHFReader;
+import com.ryk.vcsbyrfid.utils.rfid.UHF.UHFReader;
 import com.ryk.vcsbyrfid.service.*;
 import com.ryk.vcsbyrfid.utils.SendMsg;
 import lombok.extern.slf4j.Slf4j;
@@ -86,6 +86,7 @@ public class FindTagCycle {
                                 vcsWarning.setDeviceId(1L);
                                 vcsWarning.setWarningType("2");
                                 vcsWarning.setWarningContent("您好，您的车辆已进入未授权区域，为了避免不必要的麻烦，请立即离开！");
+                                log.info("您好，您的车辆"+car.getCarNumber()+"已进入未授权区域，为了避免不必要的麻烦，请立即离开！");
                                 vcsWarning.setUserId(car.getUserId());
                                 vcsWarning.setNvehicleId(car.getId());
                                 vcsWarningService.save(vcsWarning);
@@ -119,6 +120,7 @@ public class FindTagCycle {
                         vcsWarning.setDeviceId(1L);
                         vcsWarning.setWarningType("3");
                         vcsWarning.setWarningContent("您好，系统检测到您的车辆在校内有活动记录，与您预设的车辆状态不符，请及时关注！");
+                        log.info("您好，系统检测到您的车辆"+ car.getCarNumber()+"在校内有活动记录，与您预设的车辆状态不符，请及时关注！");
                         vcsWarning.setUserId(car.getUserId());
                         vcsWarning.setNvehicleId(car.getId());
                         vcsWarningService.save(vcsWarning);
@@ -153,6 +155,7 @@ public class FindTagCycle {
                         vcsWarning.setDeviceId(1L);
                         vcsWarning.setWarningType("3");
                         vcsWarning.setWarningContent("您好，系统检测到您的车辆在校内有活动记录，与您预设的车辆正常使用时间不符，请及时关注！");
+                        log.info("您好，系统检测到车辆"+ car.getCarNumber()+"在校内有活动记录，与您预设的车辆正常使用时间不符，请及时关注！");
                         vcsWarning.setUserId(car.getUserId());
                         vcsWarning.setNvehicleId(car.getId());
                         vcsWarningService.save(vcsWarning);
