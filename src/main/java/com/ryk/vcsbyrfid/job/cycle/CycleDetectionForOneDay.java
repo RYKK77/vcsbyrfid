@@ -2,9 +2,13 @@ package com.ryk.vcsbyrfid.job.cycle;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.ryk.vcsbyrfid.model.entity.VcsNvehicle;
+import com.ryk.vcsbyrfid.model.entity.VcsRemind;
 import com.ryk.vcsbyrfid.model.entity.VcsRfid;
+import com.ryk.vcsbyrfid.model.entity.VcsUser;
 import com.ryk.vcsbyrfid.rfid.UHF.UHFReader;
 import com.ryk.vcsbyrfid.service.*;
+import com.ryk.vcsbyrfid.utils.SendMsg;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,6 +16,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+
+import static com.ryk.vcsbyrfid.constant.CommonConstant.SEND_REMIND_LACK_TEMPLATE_ID;
 
 /**
  * 增量同步帖子到 es
@@ -25,18 +31,20 @@ import java.util.List;
 public class CycleDetectionForOneDay {
 
     @Resource
-    private VcsUserService vcsUserService;
-
-
-    @Resource
-    private VcsNvehicleService vcsNvehicleService;
-
-    @Resource
     private VcsRemindService vcsRemindService;
 
 
     @Resource
     private VcsRfidService vcsRfidService;
+
+    @Resource
+    private VcsNvehicleService vcsNvehicleService;
+
+    @Resource
+    private VcsUserService vcsUserService;
+
+    @Resource
+    private SendMsg sendMsg;
 
     /**
      * 24H 执行一次
@@ -56,9 +64,20 @@ public class CycleDetectionForOneDay {
                 Long userId = rfid.getUserId();
                 System.out.println("用户：" + userId + "在有效期内，不需要续费");
             } else {
-                // TODO ——存入Remind数据库
                 Long userId = rfid.getUserId();
-                System.out.println("用户：" + userId + "已过期，需要续费");
+                VcsRemind vcsRemind = new VcsRemind();
+                vcsRemind.setRemindContent("用户：" + userId + "已过期，需要续费");
+                QueryWrapper<VcsUser> userQuery = new QueryWrapper<>();
+                userQuery.eq("userId", userQuery);
+                List<VcsUser> users = vcsUserService.list(userQuery);
+                String phone = users.get(0).getPhone();
+                VcsNvehicle car = vcsNvehicleService.getById(rfid.getNvehicleId());
+
+                sendMsg.sendMegToUser(phone, SEND_REMIND_LACK_TEMPLATE_ID, null, null, null, car.getCarNumber());
+                vcsRemind.setUserId(userId);
+                vcsRemind.setRemindUserId(userId);
+                vcsRemindService.save(vcsRemind);
+                log.info("用户：" + userId + "已过期，需要续费");
             }
         }
 

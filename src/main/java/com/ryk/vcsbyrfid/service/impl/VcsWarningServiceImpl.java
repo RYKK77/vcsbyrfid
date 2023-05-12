@@ -1,9 +1,9 @@
 package com.ryk.vcsbyrfid.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ryk.vcsbyrfid.mapper.VcsWarningMapper;
 import com.ryk.vcsbyrfid.model.entity.VcsWarning;
 import com.ryk.vcsbyrfid.service.VcsWarningService;
-import com.ryk.vcsbyrfid.mapper.VcsWarningMapper;
 import org.springframework.stereotype.Service;
 
 /**

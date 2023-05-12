@@ -64,6 +64,8 @@ public class VcsNvehicle implements Serializable {
      */
     private String mold;
 
+    private Long lastPlaceId;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

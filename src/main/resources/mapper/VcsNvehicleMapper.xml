@@ -14,11 +14,13 @@
             <result property="updatedTime" column="updatedTime" jdbcType="TIMESTAMP"/>
             <result property="userId" column="userId" jdbcType="BIGINT"/>
             <result property="mold" column="mold" jdbcType="VARCHAR"/>
+            <result property="lastPlaceId" column="lastPlaceId" jdbcType="BIGINT"/>
+
     </resultMap>
 
     <sql id="Base_Column_List">
         id,carNumber,state,
         useRange,isDeleted,createdTime,
-        updatedTime,userId,mold
+        updatedTime,userId,mold,lastPlaceId
     </sql>
 </mapper>

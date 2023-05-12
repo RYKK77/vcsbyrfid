@@ -11,9 +11,8 @@ import com.ryk.vcsbyrfid.model.dto.user.VcsUserQueryRequest;
 import com.ryk.vcsbyrfid.model.entity.VcsNvehicle;
 import com.ryk.vcsbyrfid.model.entity.VcsUser;
 import com.ryk.vcsbyrfid.model.vo.VcsLoginUserVO;
-import com.ryk.vcsbyrfid.model.vo.VcsNvehicleVO;
 import com.ryk.vcsbyrfid.model.vo.VcsUserVO;
-import com.ryk.vcsbyrfid.msgSend.SendMsg;
+import com.ryk.vcsbyrfid.utils.SendMsg;
 import com.ryk.vcsbyrfid.service.VcsNvehicleService;
 import com.ryk.vcsbyrfid.service.VcsUserService;
 import com.ryk.vcsbyrfid.utils.SqlUtils;
@@ -31,7 +30,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.ryk.vcsbyrfid.constant.CommonConstant.SEND_WARNING_TEMPLATE_ID;
+import static com.ryk.vcsbyrfid.constant.CommonConstant.SEND_WARNING_ABNORMAL_TIME_TEMPLATE_ID;
+
 import static com.ryk.vcsbyrfid.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -259,7 +259,7 @@ public class VcsUserServiceImpl extends ServiceImpl<VcsUserMapper, VcsUser> impl
         VcsNvehicle vcsNvehicle = vcsNvehicleList.get(0);
         String carNumber = vcsNvehicle.getCarNumber();
 
-        sendMsg.sendMegToUser(user.getPhone(), SEND_WARNING_TEMPLATE_ID, null, sdf.format(date), "西门",carNumber);
+        sendMsg.sendMegToUser(user.getPhone(), SEND_WARNING_ABNORMAL_TIME_TEMPLATE_ID, null, sdf.format(date), "西门",carNumber);
         return true;
     }
 

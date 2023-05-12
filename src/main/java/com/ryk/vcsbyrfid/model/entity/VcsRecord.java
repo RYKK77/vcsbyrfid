@@ -23,6 +23,10 @@ public class VcsRecord implements Serializable {
 
     /**
      * 记录类型
+     * 0-正常
+     * 1-长时停车预警（7d）
+     * 2-未授权区域闯入预警
+     * 3-非正常时间预警
      */
     private Integer type;
 

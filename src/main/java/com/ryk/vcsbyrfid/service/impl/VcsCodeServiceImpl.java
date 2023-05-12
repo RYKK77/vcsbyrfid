@@ -2,27 +2,20 @@ package com.ryk.vcsbyrfid.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ryk.vcsbyrfid.common.ErrorCode;
-import com.ryk.vcsbyrfid.constant.CommonConstant;
-import com.ryk.vcsbyrfid.exception.BusinessException;
-import com.ryk.vcsbyrfid.model.dto.user.VcsUserQueryRequest;
 import com.ryk.vcsbyrfid.model.entity.VcsCode;
 import com.ryk.vcsbyrfid.model.entity.VcsUser;
-import com.ryk.vcsbyrfid.msgSend.SendMsg;
+import com.ryk.vcsbyrfid.utils.SendMsg;
 import com.ryk.vcsbyrfid.service.VcsCodeService;
 import com.ryk.vcsbyrfid.mapper.VcsCodeMapper;
 import com.ryk.vcsbyrfid.service.VcsUserService;
-import com.ryk.vcsbyrfid.utils.SqlUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
 import static com.ryk.vcsbyrfid.constant.CommonConstant.SEND_CODE_TEMPLATE_ID;
-import static com.ryk.vcsbyrfid.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
 * @author RYKK

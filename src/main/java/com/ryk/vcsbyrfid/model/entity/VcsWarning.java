@@ -18,37 +18,40 @@ public class VcsWarning implements Serializable {
     /**
      * 预警ID
      */
-//    @TableId(value = "id")
+    @TableId
     private Long id;
 
     /**
      * 预警内容
      */
-//    @TableField(value = "warning_content")
     private String warningContent;
+
+    /**
+     * 预警类型
+     * 1-长时停车预警（7d）
+     * 2-未授权区域闯入预警
+     * 3-非正常时间预警
+     */
+    private String warningType;
 
     /**
      * 预警时间
      */
-//    @TableField(value = "created_time")
     private Date createdTime;
 
     /**
      * 用户ID
      */
-//    @TableField(value = "user_id")
     private Long userId;
 
     /**
      * 车辆ID
      */
-//    @TableField(value = "nvehicle_id")
     private Long nvehicleId;
 
     /**
      * 设备ID
      */
-//    @TableField(value = "device_id")
     private Long deviceId;
 
     @TableField(exist = false)

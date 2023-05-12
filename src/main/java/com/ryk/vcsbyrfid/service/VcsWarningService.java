@@ -1,7 +1,7 @@
 package com.ryk.vcsbyrfid.service;
 
-import com.ryk.vcsbyrfid.model.entity.VcsWarning;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ryk.vcsbyrfid.model.entity.VcsWarning;
 
 /**
 * @author RYKK

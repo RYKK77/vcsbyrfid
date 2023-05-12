@@ -1,5 +1,6 @@
 package com.ryk.vcsbyrfid.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -19,30 +20,31 @@ public class VcsRemind implements Serializable {
      * 提醒ID
      */
 //    @TableId(value = "id")
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
      * 用户ID
      */
-//    @TableField(value = "user_id")
+    @TableField(value = "user_id")
     private Long userId;
 
     /**
      * 被提醒用户ID
      */
-//    @TableField(value = "remind_user_id")
+    @TableField(value = "remind_user_id")
     private Long remindUserId;
 
     /**
      * 提醒内容
      */
-//    @TableField(value = "remind_content")
+    @TableField(value = "remind_content")
     private String remindContent;
 
     /**
      * 提醒时间
      */
-//    @TableField(value = "remind_time")
+    @TableField(value = "remind_time")
     private Date remindTime;
 
     @TableField(exist = false)

@@ -1,4 +1,4 @@
-package com.ryk.vcsbyrfid.licenseCatch;
+package com.ryk.vcsbyrfid.utils;
 
 import com.github.sarxos.webcam.Webcam;
 import com.google.gson.Gson;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.ryk.vcsbyrfid.constant.CommonConstant.LICENSE_APPCODE;
+import static com.ryk.vcsbyrfid.constant.CommonConstant.APPCODE;
 
 /**
  * 获取摄像头图片并识别车牌并返回
@@ -68,7 +68,7 @@ public class LicensePlateRecognition {
         String host = "https://api03.aliyun.venuscn.com";
         String path = "/ocr/car-license";
         String method = "POST";
-        String appcode = LICENSE_APPCODE;
+        String appcode = APPCODE;
         Map<String, String> headers = new HashMap<String, String>();
         //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE " + appcode);

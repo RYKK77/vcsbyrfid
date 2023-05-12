@@ -1,11 +1,10 @@
 package com.ryk.vcsbyrfid.job.cycle;
 
 
-import com.ryk.vcsbyrfid.model.entity.VcsDevice;
-import com.ryk.vcsbyrfid.model.entity.VcsNvehicle;
-import com.ryk.vcsbyrfid.model.entity.VcsUser;
+import com.ryk.vcsbyrfid.model.entity.*;
 import com.ryk.vcsbyrfid.rfid.UHF.UHFReader;
 import com.ryk.vcsbyrfid.service.*;
+import com.ryk.vcsbyrfid.utils.SendMsg;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -15,6 +14,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import static com.ryk.vcsbyrfid.constant.CommonConstant.SEND_WARNING_ABNORMAL_TIME_TEMPLATE_ID;
+import static com.ryk.vcsbyrfid.constant.CommonConstant.SEND_WARNING_SENSITIVE_DETECT_TEMPLATE_ID;
 
 /**
  * 增量同步帖子到 es
@@ -38,14 +40,15 @@ public class FindTagCycle {
     @Resource
     private VcsNvehicleService vcsNvehicleService;
 
-    @Resource
-    private VcsRemindService vcsRemindService;
 
     @Resource
     private VcsWarningService vcsWarningService;
 
     @Resource
     private VcsDeviceService vcsDeviceService;
+
+    @Resource
+    private SendMsg sendMsg;
 
     /**
      * 0.1s 执行一次
@@ -58,6 +61,13 @@ public class FindTagCycle {
                 System.out.println("find tagName:" + inventory[0]);
                 //首先通过车辆ID找到车辆的信息
                 VcsNvehicle car = vcsNvehicleService.getById(inventory[0]);
+                //所有记录均存入Record数据库
+                VcsRecord vcsRecord = new VcsRecord();
+                vcsRecord.setType(0);
+                vcsRecord.setUserId(car.getUserId());
+                vcsRecord.setNvehicleId(car.getId());
+                vcsRecord.setDeviceId(1L);
+                vcsRecordService.save(vcsRecord);
                 //创建一个任务对象【检测是否在未授权区域】多线程节省时间
                 Runnable target = new Runnable() {
                     @Override
@@ -69,7 +79,23 @@ public class FindTagCycle {
                         Integer isSecret = device.getIsSecret();//得到当前区域等级
                         if (isSecret == 1) {
                             if (role != 3 && role != 7) {
-                                //TODO 在未授权区域有记录——存入Record数据库&&Warning数据库
+                                // 在未授权区域有记录——存入Warning数据库
+                                sendMsg.sendMegToUser(user.getPhone(), SEND_WARNING_SENSITIVE_DETECT_TEMPLATE_ID,
+                                        null, null, null, car.getCarNumber());
+                                VcsWarning vcsWarning = new VcsWarning();
+                                vcsWarning.setDeviceId(1L);
+                                vcsWarning.setWarningType("2");
+                                vcsWarning.setWarningContent("您好，您的车辆已进入未授权区域，为了避免不必要的麻烦，请立即离开！");
+                                vcsWarning.setUserId(car.getUserId());
+                                vcsWarning.setNvehicleId(car.getId());
+                                vcsWarningService.save(vcsWarning);
+//
+//                                VcsRecord vcsRecord = new VcsRecord();
+//                                vcsRecord.setType(2);
+//                                vcsRecord.setUserId(car.getUserId());
+//                                vcsRecord.setNvehicleId(car.getId());
+//                                vcsRecord.setDeviceId(1L);
+//                                vcsRecordService.save(vcsRecord);
                             }
                         }
                     }
@@ -78,7 +104,25 @@ public class FindTagCycle {
                 t.start();
                 Integer state = car.getState();//检查车辆状态
                 if (state == 1 || state == 2) {
-                    //TODO: 非正常时间预警（当前车辆的状态不应该有记录——存入Record数据库&&Warning数据库
+                    // 非正常时间预警（当前车辆的状态不应该有记录——存入Record数据库&&Warning数据库
+
+                    Long userId = car.getUserId();
+                    VcsUser user = vcsUserService.getById(userId);
+                    Date date = new Date();
+                    SimpleDateFormat sdf = new SimpleDateFormat();// 格式化时间
+                    sdf.applyPattern("yyyy-MM-dd HH:mm:ss a");// a为am/pm的标记
+                    sendMsg.sendMegToUser(user.getPhone(), SEND_WARNING_ABNORMAL_TIME_TEMPLATE_ID, null,
+                            sdf.format(date), "西门", car.getCarNumber());
+                    // 与预设记录匹配，看是否移动
+                    if (car.getLastPlaceId() != 0) {
+                        VcsWarning vcsWarning = new VcsWarning();
+                        vcsWarning.setDeviceId(1L);
+                        vcsWarning.setWarningType("3");
+                        vcsWarning.setWarningContent("您好，系统检测到您的车辆在校内有活动记录，与您预设的车辆状态不符，请及时关注！");
+                        vcsWarning.setUserId(car.getUserId());
+                        vcsWarning.setNvehicleId(car.getId());
+                        vcsWarningService.save(vcsWarning);
+                    }
                 } else {
                     String useRange = car.getUseRange();
                     String[] validTimes = useRange.split("-");
@@ -94,11 +138,25 @@ public class FindTagCycle {
                     long endTimeInMillis = endTime.getTime();
 
                     if (nowTime >= startTimeInMillis && nowTime <= endTimeInMillis) {
-                        //TODO: 正常时间——存入Record数据库
-                        System.out.println("当前时间在有效时间范围内");
+                        log.info("当前时间在有效时间范围内");
                     } else {
-                        //TODO: 非正常时间预警（当前车辆的记录不在预设的有效时间范围内——存入Record数据库&&Warning数据库
-                        System.out.println("当前时间不在有效时间范围内");
+                        //非正常时间预警-当前车辆的记录不在预设的有效时间范围内——存入&Warning数据库
+
+                        Long userId = car.getUserId();
+                        VcsUser user = vcsUserService.getById(userId);
+                        Date date = new Date();
+//                        SimpleDateFormat sdf = new SimpleDateFormat();// 格式化时间
+                        sdf.applyPattern("yyyy-MM-dd HH:mm:ss a");// a为am/pm的标记
+                        sendMsg.sendMegToUser(user.getPhone(), SEND_WARNING_ABNORMAL_TIME_TEMPLATE_ID, null,
+                                sdf.format(date), "西门", car.getCarNumber());
+                        VcsWarning vcsWarning = new VcsWarning();
+                        vcsWarning.setDeviceId(1L);
+                        vcsWarning.setWarningType("3");
+                        vcsWarning.setWarningContent("您好，系统检测到您的车辆在校内有活动记录，与您预设的车辆正常使用时间不符，请及时关注！");
+                        vcsWarning.setUserId(car.getUserId());
+                        vcsWarning.setNvehicleId(car.getId());
+                        vcsWarningService.save(vcsWarning);
+                        log.info("当前时间不在有效时间范围内");
                     }
                 }
 

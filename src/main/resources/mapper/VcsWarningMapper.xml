@@ -6,15 +6,17 @@
 
     <resultMap id="BaseResultMap" type="com.ryk.vcsbyrfid.model.entity.VcsWarning">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="warningContent" column="warning_content" jdbcType="VARCHAR"/>
-            <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
-            <result property="userId" column="user_id" jdbcType="BIGINT"/>
-            <result property="nvehicleId" column="nvehicle_id" jdbcType="BIGINT"/>
-            <result property="deviceId" column="device_id" jdbcType="BIGINT"/>
+            <result property="warningContent" column="warningContent" jdbcType="VARCHAR"/>
+            <result property="warningType" column="warningType" jdbcType="VARCHAR"/>
+            <result property="createdTime" column="createdTime" jdbcType="TIMESTAMP"/>
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
+            <result property="nvehicleId" column="nvehicleId" jdbcType="BIGINT"/>
+            <result property="deviceId" column="deviceId" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,warning_content,created_time,
-        user_id,nvehicle_id,device_id
+        id,warningContent,warningType,
+        createdTime,userId,nvehicleId,
+        deviceId
     </sql>
 </mapper>

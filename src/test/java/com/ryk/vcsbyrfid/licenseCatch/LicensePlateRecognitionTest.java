@@ -1,11 +1,10 @@
 package com.ryk.vcsbyrfid.licenseCatch;
 
 
-import com.ryk.vcsbyrfid.model.entity.LicensePlate;
+import com.ryk.vcsbyrfid.utils.LicensePlateRecognition;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 
 @SpringBootTest
