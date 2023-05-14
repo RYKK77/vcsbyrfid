@@ -53,7 +53,7 @@ public class FindTagCycle {
     /**
      * 0.1s 执行一次
      */
-    @Scheduled(fixedRate = 100)
+    @Scheduled(fixedRate = 1000)
     public void run() throws ParseException {
         if (uhfReader.getStatues() == 0) {
             String[] inventory = uhfReader.Inventory();
@@ -75,7 +75,7 @@ public class FindTagCycle {
                         Long userId = car.getUserId();
                         VcsUser user = vcsUserService.getById(userId);
                         Integer role = user.getRole();//获得用户角色 3/7 有高级进出权限
-                        VcsDevice device = vcsDeviceService.getById(1);
+                        VcsDevice device = vcsDeviceService.getById(1);//更改当前设备信息（测试需要！！！
                         Integer isSecret = device.getIsSecret();//得到当前区域等级
                         if (isSecret == 1) {
                             if (role != 3 && role != 7) {
@@ -86,7 +86,7 @@ public class FindTagCycle {
                                 vcsWarning.setDeviceId(1L);
                                 vcsWarning.setWarningType("2");
                                 vcsWarning.setWarningContent("您好，您的车辆已进入未授权区域，为了避免不必要的麻烦，请立即离开！");
-                                log.info("您好，您的车辆"+car.getCarNumber()+"已进入未授权区域，为了避免不必要的麻烦，请立即离开！");
+                                log.info("您好，您的车辆" + car.getCarNumber() + "已进入未授权区域，为了避免不必要的麻烦，请立即离开！");
                                 vcsWarning.setUserId(car.getUserId());
                                 vcsWarning.setNvehicleId(car.getId());
                                 vcsWarningService.save(vcsWarning);
@@ -120,7 +120,7 @@ public class FindTagCycle {
                         vcsWarning.setDeviceId(1L);
                         vcsWarning.setWarningType("3");
                         vcsWarning.setWarningContent("您好，系统检测到您的车辆在校内有活动记录，与您预设的车辆状态不符，请及时关注！");
-                        log.info("您好，系统检测到您的车辆"+ car.getCarNumber()+"在校内有活动记录，与您预设的车辆状态不符，请及时关注！");
+                        log.info("您好，系统检测到您的车辆" + car.getCarNumber() + "在校内有活动记录，与您预设的车辆状态不符，请及时关注！");
                         vcsWarning.setUserId(car.getUserId());
                         vcsWarning.setNvehicleId(car.getId());
                         vcsWarningService.save(vcsWarning);
@@ -132,6 +132,7 @@ public class FindTagCycle {
                     String endTimeStr = validTimes[1];
 
                     Calendar now = Calendar.getInstance();
+                    now.set(1970, Calendar.JANUARY, 1);
                     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
                     Date startTime = sdf.parse(startTimeStr);
                     Date endTime = sdf.parse(endTimeStr);
@@ -140,7 +141,7 @@ public class FindTagCycle {
                     long endTimeInMillis = endTime.getTime();
 
                     if (nowTime >= startTimeInMillis && nowTime <= endTimeInMillis) {
-                        log.info("当前时间在有效时间范围内");
+                        log.info("当前车辆：" + car.getCarNumber() + "时间在有效时间范围内");
                     } else {
                         //非正常时间预警-当前车辆的记录不在预设的有效时间范围内——存入&Warning数据库
 
@@ -155,11 +156,10 @@ public class FindTagCycle {
                         vcsWarning.setDeviceId(1L);
                         vcsWarning.setWarningType("3");
                         vcsWarning.setWarningContent("您好，系统检测到您的车辆在校内有活动记录，与您预设的车辆正常使用时间不符，请及时关注！");
-                        log.info("您好，系统检测到车辆"+ car.getCarNumber()+"在校内有活动记录，与您预设的车辆正常使用时间不符，请及时关注！");
+                        log.info("您好，系统检测到车辆" + car.getCarNumber() + "在校内有活动记录，与您预设的车辆正常使用时间不符，请及时关注！");
                         vcsWarning.setUserId(car.getUserId());
                         vcsWarning.setNvehicleId(car.getId());
                         vcsWarningService.save(vcsWarning);
-                        log.info("当前时间不在有效时间范围内");
                     }
                 }
 
