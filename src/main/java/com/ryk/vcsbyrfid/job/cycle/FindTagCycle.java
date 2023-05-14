@@ -21,8 +21,6 @@ import static com.ryk.vcsbyrfid.constant.CommonConstant.SEND_WARNING_SENSITIVE_D
 /**
  * 增量同步帖子到 es
  *
- * @author ryk
- * @from
  */
 // todo 取消注释开启任务
 @Component
@@ -69,27 +67,25 @@ public class FindTagCycle {
                 vcsRecord.setDeviceId(1L);
                 vcsRecordService.save(vcsRecord);
                 //创建一个任务对象【检测是否在未授权区域】多线程节省时间
-                Runnable target = new Runnable() {
-                    @Override
-                    public void run() {
-                        Long userId = car.getUserId();
-                        VcsUser user = vcsUserService.getById(userId);
-                        Integer role = user.getRole();//获得用户角色 3/7 有高级进出权限
-                        VcsDevice device = vcsDeviceService.getById(1);//更改当前设备信息（测试需要！！！
-                        Integer isSecret = device.getIsSecret();//得到当前区域等级
-                        if (isSecret == 1) {
-                            if (role != 3 && role != 7) {
-                                // 在未授权区域有记录——存入Warning数据库
-                                sendMsg.sendMegToUser(user.getPhone(), SEND_WARNING_SENSITIVE_DETECT_TEMPLATE_ID,
-                                        null, null, null, car.getCarNumber());
-                                VcsWarning vcsWarning = new VcsWarning();
-                                vcsWarning.setDeviceId(1L);
-                                vcsWarning.setWarningType("2");
-                                vcsWarning.setWarningContent("您好，您的车辆已进入未授权区域，为了避免不必要的麻烦，请立即离开！");
-                                log.info("您好，您的车辆" + car.getCarNumber() + "已进入未授权区域，为了避免不必要的麻烦，请立即离开！");
-                                vcsWarning.setUserId(car.getUserId());
-                                vcsWarning.setNvehicleId(car.getId());
-                                vcsWarningService.save(vcsWarning);
+                Runnable target = () -> {
+                    Long userId = car.getUserId();
+                    VcsUser user = vcsUserService.getById(userId);
+                    Integer role = user.getRole();//获得用户角色 3/7 有高级进出权限
+                    VcsDevice device = vcsDeviceService.getById(1);//更改当前设备信息（测试需要！！！
+                    Integer isSecret = device.getIsSecret();//得到当前区域等级
+                    if (isSecret == 1) {
+                        if (role != 3 && role != 7) {
+                            // 在未授权区域有记录——存入Warning数据库
+                            sendMsg.sendMegToUser(user.getPhone(), SEND_WARNING_SENSITIVE_DETECT_TEMPLATE_ID,
+                                    null, null, null, car.getCarNumber());
+                            VcsWarning vcsWarning = new VcsWarning();
+                            vcsWarning.setDeviceId(1L);
+                            vcsWarning.setWarningType("2");
+                            vcsWarning.setWarningContent("进入未授权区域");
+                            log.info("您好，您的车辆" + car.getCarNumber() + "已进入未授权区域，为了避免不必要的麻烦，请立即离开！");
+                            vcsWarning.setUserId(car.getUserId());
+                            vcsWarning.setNvehicleId(car.getId());
+                            vcsWarningService.save(vcsWarning);
 //
 //                                VcsRecord vcsRecord = new VcsRecord();
 //                                vcsRecord.setType(2);
@@ -97,7 +93,6 @@ public class FindTagCycle {
 //                                vcsRecord.setNvehicleId(car.getId());
 //                                vcsRecord.setDeviceId(1L);
 //                                vcsRecordService.save(vcsRecord);
-                            }
                         }
                     }
                 };
@@ -119,7 +114,7 @@ public class FindTagCycle {
                         VcsWarning vcsWarning = new VcsWarning();
                         vcsWarning.setDeviceId(1L);
                         vcsWarning.setWarningType("3");
-                        vcsWarning.setWarningContent("您好，系统检测到您的车辆在校内有活动记录，与您预设的车辆状态不符，请及时关注！");
+                        vcsWarning.setWarningContent("车辆状态与实际不符");
                         log.info("您好，系统检测到您的车辆" + car.getCarNumber() + "在校内有活动记录，与您预设的车辆状态不符，请及时关注！");
                         vcsWarning.setUserId(car.getUserId());
                         vcsWarning.setNvehicleId(car.getId());
@@ -155,7 +150,7 @@ public class FindTagCycle {
                         VcsWarning vcsWarning = new VcsWarning();
                         vcsWarning.setDeviceId(1L);
                         vcsWarning.setWarningType("3");
-                        vcsWarning.setWarningContent("您好，系统检测到您的车辆在校内有活动记录，与您预设的车辆正常使用时间不符，请及时关注！");
+                        vcsWarning.setWarningContent("车辆使用时间不符");
                         log.info("您好，系统检测到车辆" + car.getCarNumber() + "在校内有活动记录，与您预设的车辆正常使用时间不符，请及时关注！");
                         vcsWarning.setUserId(car.getUserId());
                         vcsWarning.setNvehicleId(car.getId());
