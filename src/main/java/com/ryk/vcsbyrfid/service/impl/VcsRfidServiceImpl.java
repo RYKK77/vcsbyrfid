@@ -35,7 +35,7 @@ public class VcsRfidServiceImpl extends ServiceImpl<VcsRfidMapper, VcsRfid>
         vcsRfid.setUserId(userId);
         boolean result = this.save(vcsRfid);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-        rfidService.writeRFIDTag(nvehicleId.toString());
+        //rfidService.writeRFIDTag(nvehicleId.toString());
         return vcsRfid.getId();
     }
 }

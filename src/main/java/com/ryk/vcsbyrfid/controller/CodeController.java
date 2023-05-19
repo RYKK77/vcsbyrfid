@@ -50,6 +50,13 @@ public class CodeController {
         }
         return ResultUtils.error(ErrorCode.NOT_FOUND_ERROR);
     }
+
+    /**
+     * 检查验证码
+     * @param phone 手机号
+     * @param codeNum 验证码
+     * @return 校验结果
+     */
     @GetMapping("/check")
     public BaseResponse<String> checkCode(String phone, String codeNum) {
         Boolean result = vcsCodeService.checkVerifyCode(phone, codeNum);

@@ -21,9 +21,9 @@ public interface VcsCodeService extends IService<VcsCode> {
 
     /**
      * 检验验证码
-     * @param phone
-     * @param codeNum
-     * @return
+     * @param phone 手机号
+     * @param codeNum 验证码
+     * @return 结果
      */
     public Boolean checkVerifyCode(String phone, String codeNum);
 }
