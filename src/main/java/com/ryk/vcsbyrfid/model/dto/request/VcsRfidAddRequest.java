@@ -1,7 +1,5 @@
-package com.ryk.vcsbyrfid.model.dto.user;
+package com.ryk.vcsbyrfid.model.dto.request;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;

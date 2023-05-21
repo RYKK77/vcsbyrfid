@@ -32,6 +32,10 @@ public class VcsUserVO implements Serializable {
      * 用户姓名
      */
     private String userName;
+    /**
+     * 学院
+     */
+    private String college;
 
     /**
      * 用户邮箱

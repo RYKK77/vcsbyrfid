@@ -1,9 +1,5 @@
-package com.ryk.vcsbyrfid.model.dto.user;
+package com.ryk.vcsbyrfid.model.dto.request;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.ryk.vcsbyrfid.common.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,6 +30,10 @@ public class VcsUserQueryRequest extends PageRequest implements Serializable {
      * 用户姓名
      */
     private String userName;
+    /**
+     * 学院
+     */
+    private String college;
 
     /**
      * 用户邮箱

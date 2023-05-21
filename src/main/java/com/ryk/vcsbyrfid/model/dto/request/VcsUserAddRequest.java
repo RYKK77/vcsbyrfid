@@ -1,4 +1,4 @@
-package com.ryk.vcsbyrfid.model.dto.user;
+package com.ryk.vcsbyrfid.model.dto.request;
 
 import lombok.Data;
 
@@ -23,6 +23,7 @@ public class VcsUserAddRequest implements Serializable {
      * 用户姓名
      */
     private String userName;
+    private String college;
 
     private String mail;
 

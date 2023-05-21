@@ -8,6 +8,7 @@
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="sid" column="sid" jdbcType="VARCHAR"/>
             <result property="userName" column="userName" jdbcType="VARCHAR"/>
+            <result property="college" column="college" jdbcType="VARCHAR"/>
             <result property="mail" column="mail" jdbcType="VARCHAR"/>
             <result property="password" column="password" jdbcType="VARCHAR"/>
             <result property="phone" column="phone" jdbcType="VARCHAR"/>
@@ -19,8 +20,8 @@
 
     <sql id="Base_Column_List">
         id,sid,userName,
-        mail,password,phone,
-        role,is_deleted,created_time,
-        updated_time
+        college,mail,password,
+        phone,role,is_deleted,
+        created_time,updated_time
     </sql>
 </mapper>

@@ -1,7 +1,8 @@
-package com.ryk.vcsbyrfid.model.dto.user;
+package com.ryk.vcsbyrfid.model.dto.request;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.ryk.vcsbyrfid.common.PageRequest;
+import com.ryk.vcsbyrfid.model.dto.respond.QueryCond;
+import com.ryk.vcsbyrfid.model.dto.respond.QueryTimeRange;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,29 +20,19 @@ import java.util.Date;
 public class VcsRecordQueryRequest extends PageRequest implements Serializable {
 
     /**
+     * 用户ID
+     */
+    private Long userId;
+
+    private QueryCond queryCond;
+
+
+    /**
      * 记录类型
      */
     private Integer type;
 
-    /**
-     * 创建时间
-     */
-    private Date createdTime;
 
-    /**
-     * 设备ID
-     */
-    private Long deviceId;
-
-    /**
-     * 车辆ID
-     */
-    private Long nvehicleId;
-
-    /**
-     * 用户ID
-     */
-    private Long userId;
 
     private static final long serialVersionUID = 1L;
 }

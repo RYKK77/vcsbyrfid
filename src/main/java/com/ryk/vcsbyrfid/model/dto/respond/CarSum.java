@@ -1,4 +1,4 @@
-package com.ryk.vcsbyrfid.model.entity;
+package com.ryk.vcsbyrfid.model.dto.respond;
 
 
 import lombok.Data;

@@ -8,7 +8,7 @@ import com.ryk.vcsbyrfid.common.ErrorCode;
 import com.ryk.vcsbyrfid.common.ResultUtils;
 import com.ryk.vcsbyrfid.exception.BusinessException;
 import com.ryk.vcsbyrfid.exception.ThrowUtils;
-import com.ryk.vcsbyrfid.model.dto.user.*;
+import com.ryk.vcsbyrfid.model.dto.request.*;
 import com.ryk.vcsbyrfid.model.entity.VcsUser;
 import com.ryk.vcsbyrfid.model.vo.VcsLoginUserVO;
 import com.ryk.vcsbyrfid.model.vo.VcsUserVO;
@@ -233,13 +233,15 @@ public class VcsUserController {
      * @return
      */
     @PostMapping("/list/page")
-    public BaseResponse<Page<VcsUser>> listUserByPage(@RequestBody VcsUserQueryRequest userQueryRequest,
+    public BaseResponse<Page<VcsUserVO>> listUserByPage(@RequestBody VcsUserQueryRequest userQueryRequest,
                                                       HttpServletRequest request) {
         long current = userQueryRequest.getCurrent();
         long size = userQueryRequest.getPageSize();
         Page<VcsUser> userPage = vcsUserService.page(new Page<>(current, size),
                 vcsUserService.getQueryWrapper(userQueryRequest));
-        return ResultUtils.success(userPage);
+        Page<VcsUserVO> userPageVO = new Page<>();
+        BeanUtils.copyProperties(userPage, userPageVO);
+        return ResultUtils.success(userPageVO);
     }
 
     /**

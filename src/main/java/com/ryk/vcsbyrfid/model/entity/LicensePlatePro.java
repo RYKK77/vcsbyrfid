@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author ryk
  * @from  
  */
-//@TableName(value = "user")
+//@TableName(value = "request")
 @Data
 public class LicensePlatePro implements Serializable {
     public String number;

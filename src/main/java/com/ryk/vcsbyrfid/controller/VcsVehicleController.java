@@ -10,7 +10,8 @@ import com.ryk.vcsbyrfid.exception.ThrowUtils;
 import com.ryk.vcsbyrfid.model.dto.Vehicle.VcsVehicleRequest;
 import com.ryk.vcsbyrfid.model.dto.Vehicle.VcsVehicleStatusRequest;
 import com.ryk.vcsbyrfid.model.dto.Vehicle.VcsVehicleTimeRequest;
-import com.ryk.vcsbyrfid.model.dto.user.VcsRecordQueryRequest;
+import com.ryk.vcsbyrfid.model.dto.request.VcsRecordQueryRequest;
+import com.ryk.vcsbyrfid.model.dto.respond.VcsRecordQueryRespond;
 import com.ryk.vcsbyrfid.model.entity.VcsNvehicle;
 import com.ryk.vcsbyrfid.model.entity.VcsRecord;
 import com.ryk.vcsbyrfid.model.entity.VcsUser;
@@ -144,17 +145,13 @@ public class VcsVehicleController {
      * @return
      */
     @PostMapping("/records")
-    public BaseResponse<Page<VcsRecord>> listVehicleRecordByPage(@RequestBody VcsRecordQueryRequest recordQueryRequest,
-                                                                 HttpServletRequest request) {
+    public BaseResponse<VcsRecordQueryRespond> listVehicleRecordByPage(@RequestBody VcsRecordQueryRequest recordQueryRequest,
+                                                                       HttpServletRequest request) {
         if (recordQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        long current = recordQueryRequest.getCurrent();
-        long pageSize = recordQueryRequest.getPageSize();
-        Page<VcsRecord> recordPage = vcsRecordService.page(new Page<>(current, pageSize),
-                vcsRecordService.getQueryWrapper(recordQueryRequest));
-        List<VcsRecord> records = recordPage.getRecords();
-        return ResultUtils.success(recordPage);
+        VcsRecordQueryRespond queryRecords = vcsRecordService.getQueryRecords(recordQueryRequest);
+        return ResultUtils.success(queryRecords);
     }
 
     @GetMapping("/records/clear")

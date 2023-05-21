@@ -2,7 +2,7 @@ package com.ryk.vcsbyrfid.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ryk.vcsbyrfid.model.dto.user.VcsUserQueryRequest;
+import com.ryk.vcsbyrfid.model.dto.request.VcsUserQueryRequest;
 import com.ryk.vcsbyrfid.model.entity.VcsUser;
 import com.ryk.vcsbyrfid.model.vo.VcsLoginUserVO;
 import com.ryk.vcsbyrfid.model.vo.VcsUserVO;

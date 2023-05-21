@@ -1,4 +1,4 @@
-package com.ryk.vcsbyrfid.model.dto.user;
+package com.ryk.vcsbyrfid.model.dto.request;
 
 import lombok.Data;
 

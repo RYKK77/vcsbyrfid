@@ -18,7 +18,7 @@ public interface UserConstant {
     /**
      * 默认角色
      */
-    String DEFAULT_ROLE = "user";
+    String DEFAULT_ROLE = "request";
 
     /**
      * 管理员角色

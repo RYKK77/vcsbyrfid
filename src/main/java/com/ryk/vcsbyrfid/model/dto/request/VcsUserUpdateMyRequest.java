@@ -1,4 +1,4 @@
-package com.ryk.vcsbyrfid.model.dto.user;
+package com.ryk.vcsbyrfid.model.dto.request;
 
 import lombok.Data;
 
@@ -11,18 +11,18 @@ import java.io.Serializable;
  * @from  
  */
 @Data
-public class VcsUserWarningRequest implements Serializable {
+public class VcsUserUpdateMyRequest implements Serializable {
 
 
     /**
-     * id
+     * 手机号
      */
-    private String id;
+    private String phone;
 
     /**
      * 用户邮箱
      */
-    private String warningMsg;
+    private String mail;
 
 
     private static final long serialVersionUID = 1L;

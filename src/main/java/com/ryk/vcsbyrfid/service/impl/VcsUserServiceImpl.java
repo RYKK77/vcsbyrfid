@@ -7,7 +7,7 @@ import com.ryk.vcsbyrfid.common.ErrorCode;
 import com.ryk.vcsbyrfid.constant.CommonConstant;
 import com.ryk.vcsbyrfid.exception.BusinessException;
 import com.ryk.vcsbyrfid.mapper.VcsUserMapper;
-import com.ryk.vcsbyrfid.model.dto.user.VcsUserQueryRequest;
+import com.ryk.vcsbyrfid.model.dto.request.VcsUserQueryRequest;
 import com.ryk.vcsbyrfid.model.entity.VcsNvehicle;
 import com.ryk.vcsbyrfid.model.entity.VcsUser;
 import com.ryk.vcsbyrfid.model.vo.VcsLoginUserVO;
@@ -113,7 +113,7 @@ public class VcsUserServiceImpl extends ServiceImpl<VcsUserMapper, VcsUser> impl
         VcsUser user = this.baseMapper.selectOne(queryWrapper);
         // 用户不存在
         if (user == null) {
-            log.info("user login failed, userAccount cannot match userPassword");
+            log.info("request login failed, userAccount cannot match userPassword");
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在或密码错误");
         }
         // 3. 记录用户的登录态

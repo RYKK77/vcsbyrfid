@@ -30,6 +30,11 @@ public class VcsUser implements Serializable {
     private String userName;
 
     /**
+     * 学院
+     */
+    private String college;
+
+    /**
      * 用户邮箱
      */
     private String mail;

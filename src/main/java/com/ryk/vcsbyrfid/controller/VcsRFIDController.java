@@ -4,7 +4,7 @@ import com.ryk.vcsbyrfid.common.BaseResponse;
 import com.ryk.vcsbyrfid.common.ErrorCode;
 import com.ryk.vcsbyrfid.common.ResultUtils;
 import com.ryk.vcsbyrfid.exception.BusinessException;
-import com.ryk.vcsbyrfid.model.dto.user.VcsRfidAddRequest;
+import com.ryk.vcsbyrfid.model.dto.request.VcsRfidAddRequest;
 import com.ryk.vcsbyrfid.service.VcsRfidService;
 import com.ryk.vcsbyrfid.service.VcsUserService;
 import lombok.extern.slf4j.Slf4j;
