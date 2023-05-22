@@ -5,7 +5,7 @@ import com.sun.jna.Native;
 
 
 public interface JNARfidDll extends Library {
-    JNARfidDll jnaDll = (JNARfidDll)Native.loadLibrary("UHFReader09", JNARfidDll.class);
+    JNARfidDll jnaDll = (JNARfidDll)Native.loadLibrary("C:\\Users\\Lenovo\\Desktop\\PBJ\\VehicleManager\\elcihev-backend\\vcsbyrfid\\src\\main\\resources\\UHFReader09.dll", JNARfidDll.class);
 
     int OpenComPort(int Port, byte[] ComAdr, byte Baud, int[] handle);//V
 

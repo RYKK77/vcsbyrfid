@@ -228,6 +228,7 @@ public class VcsUserServiceImpl extends ServiceImpl<VcsUserMapper, VcsUser> impl
         String sid = userQueryRequest.getSid();
         String mail = userQueryRequest.getMail();
         String phone = userQueryRequest.getPhone();
+        String college = userQueryRequest.getCollege();
         Integer role = userQueryRequest.getRole();
         String sortField = userQueryRequest.getSortField();
         String sortOrder = userQueryRequest.getSortOrder();
@@ -236,7 +237,8 @@ public class VcsUserServiceImpl extends ServiceImpl<VcsUserMapper, VcsUser> impl
         queryWrapper.eq(StringUtils.isNotBlank(sid), "sid", sid);
         queryWrapper.eq(StringUtils.isNotBlank(mail), "mail", mail);
         queryWrapper.eq(StringUtils.isNotBlank(phone), "phone", phone);
-        queryWrapper.eq(role != null, "role", id);
+        queryWrapper.eq(role != null, "role", role);
+        queryWrapper.eq(StringUtils.isNotBlank(college), "college", college);
         queryWrapper.orderBy(SqlUtils.validSortField(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
                 sortField);
         return queryWrapper;

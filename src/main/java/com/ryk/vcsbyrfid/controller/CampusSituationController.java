@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Random;
 
@@ -76,7 +77,7 @@ public class CampusSituationController {
         campusBaseInfo.setCarSum(carSums);
         // 车辆进出统计
         campusBaseInfo.setTodayInCars(String.valueOf(vcsRecordService.list().size()));
-        campusBaseInfo.setTodayOutCars(String.valueOf(vcsRecordService.list().size()-35));
+        campusBaseInfo.setTodayOutCars(String.valueOf(vcsRecordService.list().size()-35 == 0 ? 35 : vcsRecordService.list().size()-35));
         AccessStatistics[] accessStatistics = new AccessStatistics[4];
         for (int i = 0; i < 4;i++) {
             accessStatistics[i] = new AccessStatistics();
@@ -134,23 +135,25 @@ public class CampusSituationController {
         monitorInfos[4].setFacility("消防栓");
         campusSecurity.setMonitorInfo(monitorInfos);
         // 当日警情播报
-        DangerBoardcast[] dangerBoardcasts = new DangerBoardcast[10];
+        DangerBoardcast[] dangerBoardcasts = new DangerBoardcast[20];
         List<VcsWarning> warningList = vcsWarningService.list();
-        int warningIndex = warningList.size() - 1;
-        for (int i = 0; i< 10; i++) {
-            dangerBoardcasts[i] = new DangerBoardcast();
-            VcsWarning vcsWarning = warningList.get(warningIndex);
-            if(warningIndex > 0){
-                warningIndex--;
-            } else {
-                warningIndex = warningList.size() - 1;
+        if (warningList.size() > 0) {
+            int warningIndex = warningList.size() - 1;
+            for (int i = 0; i< 20; i++) {
+                dangerBoardcasts[i] = new DangerBoardcast();
+                VcsWarning vcsWarning = warningList.get(warningIndex);
+                if(warningIndex > 0){
+                    warningIndex--;
+                } else {
+                    warningIndex = warningList.size() - 1;
+                }
+                dangerBoardcasts[i].setLevel(Integer.parseInt(vcsWarning.getWarningType()));
+                dangerBoardcasts[i].setRecordTime(new SimpleDateFormat("HH:mm:ss").format(vcsWarning.getCreatedTime()));
+                VcsDevice device = vcsDeviceService.getById(vcsWarning.getDeviceId());
+                dangerBoardcasts[i].setRecordBayonet(device.getDName());
+                dangerBoardcasts[i].setRecordCause(vcsWarning.getWarningContent());
+                dangerBoardcasts[i].setHandleStatus(0);
             }
-            dangerBoardcasts[i].setLevel(Integer.parseInt(vcsWarning.getWarningType()));
-            dangerBoardcasts[i].setRecordTime(vcsWarning.getCreatedTime().toString());
-            VcsDevice device = vcsDeviceService.getById(vcsWarning.getDeviceId());
-            dangerBoardcasts[i].setRecordBayonet(device.getDName());
-            dangerBoardcasts[i].setRecordCause(vcsWarning.getWarningContent());
-            dangerBoardcasts[i].setHandleStatus(0);
         }
         campusSecurity.setDangerBoardcast(dangerBoardcasts);
         // 警情类型统计

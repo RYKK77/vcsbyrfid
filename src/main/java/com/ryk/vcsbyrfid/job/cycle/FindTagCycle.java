@@ -51,7 +51,7 @@ public class FindTagCycle {
     /**
      * 0.1s 执行一次
      */
-    @Scheduled(fixedRate = 1000)
+//    @Scheduled(fixedRate = 1000)
     public void run() throws ParseException {
         if (uhfReader.getStatues() == 0) {
             String[] inventory = uhfReader.Inventory();
