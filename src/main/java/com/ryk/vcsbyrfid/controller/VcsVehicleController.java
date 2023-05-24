@@ -15,6 +15,7 @@ import com.ryk.vcsbyrfid.model.dto.respond.VcsRecordQueryRespond;
 import com.ryk.vcsbyrfid.model.entity.VcsNvehicle;
 import com.ryk.vcsbyrfid.model.entity.VcsRecord;
 import com.ryk.vcsbyrfid.model.entity.VcsUser;
+import com.ryk.vcsbyrfid.model.vo.VcsCarVO;
 import com.ryk.vcsbyrfid.model.vo.VcsNvehicleVO;
 import com.ryk.vcsbyrfid.service.VcsNvehicleService;
 import com.ryk.vcsbyrfid.service.VcsRecordService;
@@ -154,6 +155,11 @@ public class VcsVehicleController {
         return ResultUtils.success(queryRecords);
     }
 
+    /**
+     * 异常记录消除
+     * @param request
+     * @return
+     */
     @GetMapping("/records/clear")
     public BaseResponse<Boolean> clearWaringRecords(HttpServletRequest request) {
         // 先判断是否已登录
@@ -169,5 +175,17 @@ public class VcsVehicleController {
         updateWrapper.set("type", 0);
         boolean result = vcsRecordService.update(updateWrapper);
         return ResultUtils.success(result);
+    }
+
+    /**
+     * 根据用户ID获取车辆信息
+     * @param userId 用户ID
+     * @param request request
+     * @return response
+     */
+    @GetMapping("/vehicleinfo/{userId}")
+    public BaseResponse<?> getUserVehicleInfoById(@PathVariable("userId") String userId, HttpServletRequest request) {
+        List<VcsCarVO> vehicleInfoByUserId = vcsNvehicleService.getVehicleInfoByUserId(userId, request);
+        return ResultUtils.success(vehicleInfoByUserId);
     }
 }

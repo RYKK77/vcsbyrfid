@@ -32,7 +32,6 @@ public class VcsNvehicleVO implements Serializable {
     /**
      * 正常使用时段
      */
-//    @TableField(value = "use_range")
     private String useRange;
 
 
@@ -45,7 +44,6 @@ public class VcsNvehicleVO implements Serializable {
     /**
      * 用户ID
      */
-//    @TableField(value = "user_id")
     private Long userId;
 
     private static final long serialVersionUID = 1L;

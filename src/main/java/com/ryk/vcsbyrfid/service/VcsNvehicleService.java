@@ -2,9 +2,11 @@ package com.ryk.vcsbyrfid.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ryk.vcsbyrfid.model.entity.VcsNvehicle;
+import com.ryk.vcsbyrfid.model.vo.VcsCarVO;
 import com.ryk.vcsbyrfid.model.vo.VcsNvehicleVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
 * @author RYKK
@@ -17,7 +19,7 @@ public interface VcsNvehicleService extends IService<VcsNvehicle> {
      * @param request
      * @return
      */
-    public VcsNvehicleVO getVehicleInfo(HttpServletRequest request);
+    VcsNvehicleVO getVehicleInfo(HttpServletRequest request);
 
     /**
      * 更改车辆正常使用时间
@@ -25,7 +27,7 @@ public interface VcsNvehicleService extends IService<VcsNvehicle> {
      * @param request
      * @return
      */
-    public Boolean updateVehicleTime(VcsNvehicle vcsNvehicle, HttpServletRequest request);
+    Boolean updateVehicleTime(VcsNvehicle vcsNvehicle, HttpServletRequest request);
 
     /**
      * 更改车辆状态
@@ -33,5 +35,13 @@ public interface VcsNvehicleService extends IService<VcsNvehicle> {
      * @param request
      * @return
      */
-    public Boolean updateVehicleStatus(VcsNvehicle vcsNvehicle, HttpServletRequest request);
+    Boolean updateVehicleStatus(VcsNvehicle vcsNvehicle, HttpServletRequest request);
+
+    /**
+     * 根据用户ID获取车辆信息
+     * @param userId
+     * @param request
+     * @return
+     */
+    List<VcsCarVO> getVehicleInfoByUserId(String userId, HttpServletRequest request);
 }
