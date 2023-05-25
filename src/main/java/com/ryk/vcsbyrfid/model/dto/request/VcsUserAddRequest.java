@@ -1,6 +1,7 @@
 package com.ryk.vcsbyrfid.model.dto.request;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -10,23 +11,17 @@ import java.io.Serializable;
  * @author ryk
  * @from  
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class VcsUserAddRequest implements Serializable {
-
+public class VcsUserAddRequest extends VcsUserBaseRequest implements Serializable {
 
     /**
      * 用户学号
      */
     private String sid;
     private String phone;
-    /**
-     * 用户姓名
-     */
-    private String userName;
-    private String college;
 
     private String mail;
-
 
     private Integer role;
 

@@ -185,6 +185,7 @@ public class VcsVehicleController {
      */
     @GetMapping("/vehicleinfo/{userId}")
     public BaseResponse<?> getUserVehicleInfoById(@PathVariable("userId") String userId, HttpServletRequest request) {
+        // TODO: 管理员鉴权
         List<VcsCarVO> vehicleInfoByUserId = vcsNvehicleService.getVehicleInfoByUserId(userId, request);
         return ResultUtils.success(vehicleInfoByUserId);
     }
