@@ -1,23 +1,24 @@
-package com.ryk.vcsbyrfid.model.dto.Vehicle;
+package com.ryk.vcsbyrfid.model.dto.request;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
- * 用户创建请求
+ * 车辆信息更新请求
  *
  * @author ryk
  * @from  
  */
 @Data
-public class VcsVehicleRequest implements Serializable {
+public class VcsVehicleUpdateRequest implements Serializable {
 
-
+    /**
+     * 车辆ID
+     */
+    private Long id;
 
     /**
      * 车牌号

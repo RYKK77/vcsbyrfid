@@ -1,4 +1,4 @@
-package com.ryk.vcsbyrfid.model.dto.Vehicle;
+package com.ryk.vcsbyrfid.model.dto.request;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -7,14 +7,13 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 用户创建请求
+ * 用户更改正常使用时间
  *
  * @author ryk
  * @from  
  */
 @Data
-public class VcsVehicleStatusRequest implements Serializable {
-
+public class VcsVehicleTimeRequest implements Serializable {
 
 
     /**
@@ -25,9 +24,14 @@ public class VcsVehicleStatusRequest implements Serializable {
 
 
     /**
-     * 车辆状态
+     * 正常使用时段
      */
-    private Integer state;
+    private String useRange;
+
+
+
+
+
 
     private static final long serialVersionUID = 1L;
 }

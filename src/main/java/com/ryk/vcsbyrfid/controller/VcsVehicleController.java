@@ -1,16 +1,12 @@
 package com.ryk.vcsbyrfid.controller;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ryk.vcsbyrfid.common.BaseResponse;
 import com.ryk.vcsbyrfid.common.ErrorCode;
 import com.ryk.vcsbyrfid.common.ResultUtils;
 import com.ryk.vcsbyrfid.exception.BusinessException;
 import com.ryk.vcsbyrfid.exception.ThrowUtils;
-import com.ryk.vcsbyrfid.model.dto.Vehicle.VcsVehicleRequest;
-import com.ryk.vcsbyrfid.model.dto.Vehicle.VcsVehicleStatusRequest;
-import com.ryk.vcsbyrfid.model.dto.Vehicle.VcsVehicleTimeRequest;
-import com.ryk.vcsbyrfid.model.dto.request.VcsRecordQueryRequest;
+import com.ryk.vcsbyrfid.model.dto.request.*;
 import com.ryk.vcsbyrfid.model.dto.respond.VcsRecordQueryRespond;
 import com.ryk.vcsbyrfid.model.entity.VcsNvehicle;
 import com.ryk.vcsbyrfid.model.entity.VcsRecord;
@@ -100,6 +96,29 @@ public class VcsVehicleController {
         boolean result = vcsNvehicleService.save(vcsNvehicle);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(vcsNvehicle.getId());
+    }
+
+    /**
+     * 修改车辆(仅管理员)
+     *
+     * @param vcsVehicleUpdateRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/update")
+    public BaseResponse<String> updateVehicle(@RequestBody VcsVehicleUpdateRequest vcsVehicleUpdateRequest, HttpServletRequest request) {
+        if (vcsVehicleUpdateRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        if (!vcsUserService.isAdmin(request)) {
+            //管理员鉴权
+            return ResultUtils.error(ErrorCode.NO_AUTH_ERROR);
+        }
+        VcsNvehicle vcsNvehicle = new VcsNvehicle();
+        BeanUtils.copyProperties(vcsVehicleUpdateRequest, vcsNvehicle);
+        boolean result = vcsNvehicleService.updateById(vcsNvehicle);
+        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        return ResultUtils.success("修改成功");
     }
 
     /**

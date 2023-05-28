@@ -2,6 +2,7 @@ package com.ryk.vcsbyrfid.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ryk.vcsbyrfid.model.dto.request.VcsRfidAddRequest;
+import com.ryk.vcsbyrfid.model.dto.request.VcsRfidUpdateRequest;
 import com.ryk.vcsbyrfid.model.entity.VcsRfid;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,5 +21,12 @@ public interface VcsRfidService extends IService<VcsRfid> {
      * @return
      */
     public Long generateRfidTag(VcsRfidAddRequest vcsRfidAddRequest, HttpServletRequest request);
+    /**
+     * 更新RFID信息并储存
+     * @param vcsRfidUpdateRequest
+     * @param request
+     * @return
+     */
+    public Boolean updateRfidTag(VcsRfidUpdateRequest vcsRfidUpdateRequest, HttpServletRequest request);
 
 }

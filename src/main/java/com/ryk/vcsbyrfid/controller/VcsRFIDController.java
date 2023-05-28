@@ -5,6 +5,7 @@ import com.ryk.vcsbyrfid.common.ErrorCode;
 import com.ryk.vcsbyrfid.common.ResultUtils;
 import com.ryk.vcsbyrfid.exception.BusinessException;
 import com.ryk.vcsbyrfid.model.dto.request.VcsRfidAddRequest;
+import com.ryk.vcsbyrfid.model.dto.request.VcsRfidUpdateRequest;
 import com.ryk.vcsbyrfid.service.VcsRfidService;
 import com.ryk.vcsbyrfid.service.VcsUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,26 @@ public class VcsRFIDController {
             return ResultUtils.error(ErrorCode.NO_AUTH_ERROR);
         }
         Long result = vcsRfidService.generateRfidTag(vcsRfidAddRequest, request);
+        return ResultUtils.success(result);
+
+    }
+
+    /**
+     * 生成RFID信息并储存
+     * @param vcsRfidUpdateRequest
+     * @param request
+     * @return 标签ID
+     */
+    @PostMapping("/update")
+    public BaseResponse<Boolean> updateRfidTag(@RequestBody VcsRfidUpdateRequest vcsRfidUpdateRequest, HttpServletRequest request){
+        if (vcsRfidUpdateRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        if (!vcsUserService.isAdmin(request)) {
+            //管理员鉴权
+            return ResultUtils.error(ErrorCode.NO_AUTH_ERROR);
+        }
+        Boolean result = vcsRfidService.updateRfidTag(vcsRfidUpdateRequest, request);
         return ResultUtils.success(result);
 
     }

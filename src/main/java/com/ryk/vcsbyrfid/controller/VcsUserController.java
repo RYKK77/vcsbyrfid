@@ -1,5 +1,6 @@
 package com.ryk.vcsbyrfid.controller;
 
+import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ryk.vcsbyrfid.common.BaseResponse;
@@ -14,14 +15,17 @@ import com.ryk.vcsbyrfid.model.vo.VcsLoginUserVO;
 import com.ryk.vcsbyrfid.model.vo.VcsUserVO;
 import com.ryk.vcsbyrfid.service.VcsCodeService;
 import com.ryk.vcsbyrfid.service.VcsUserService;
+import com.ryk.vcsbyrfid.utils.ExcelListener;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -314,5 +318,16 @@ public class VcsUserController {
             return ResultUtils.success("修改成功！请妥善保管密码。");
         }
         return ResultUtils.error(ErrorCode.CODE_WRONG);
+    }
+
+
+    @PostMapping("upload")
+    public BaseResponse<String> upload(MultipartFile file) throws IOException {
+        EasyExcel.read(file.getInputStream(),
+                        VcsUserAddRequest.class,
+                        new ExcelListener(vcsUserService))
+                .sheet()
+                .doRead();
+        return ResultUtils.success("成功批量导入");
     }
 }
