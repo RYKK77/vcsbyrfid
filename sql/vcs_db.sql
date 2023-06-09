@@ -155,7 +155,7 @@ CREATE TABLE `vcs_warning`  (
   `userId` bigint(20) NOT NULL COMMENT '用户ID',
   `nvehicleId` bigint(20) NOT NULL COMMENT '车辆ID',
   `deviceId` bigint(20) NOT NULL COMMENT '设备ID',
+  recordId       bigint  null,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '预警记录' ROW_FORMAT = Dynamic;
-
 SET FOREIGN_KEY_CHECKS = 1;
