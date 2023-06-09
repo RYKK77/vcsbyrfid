@@ -86,6 +86,7 @@ public class FindTagCycle {
                             log.info("您好，您的车辆" + car.getCarNumber() + "已进入未授权区域，为了避免不必要的麻烦，请立即离开！");
                             vcsWarning.setUserId(car.getUserId());
                             vcsWarning.setNvehicleId(car.getId());
+                            vcsWarning.setRecordId(vcsRecord.getId());
                             vcsWarningService.save(vcsWarning);
                             vcsRecord.setType(1);
                             vcsRecordService.updateById(vcsRecord);
@@ -121,6 +122,7 @@ public class FindTagCycle {
                         log.info("您好，系统检测到您的车辆" + car.getCarNumber() + "在校内有活动记录，与您预设的车辆状态不符，请及时关注！");
                         vcsWarning.setUserId(car.getUserId());
                         vcsWarning.setNvehicleId(car.getId());
+                        vcsWarning.setRecordId(vcsRecord.getId());
                         vcsWarningService.save(vcsWarning);
                         vcsRecord.setType(1);
                         vcsRecordService.updateById(vcsRecord);
@@ -159,6 +161,7 @@ public class FindTagCycle {
                         log.info("您好，系统检测到车辆" + car.getCarNumber() + "在校内有活动记录，与您预设的车辆正常使用时间不符，请及时关注！");
                         vcsWarning.setUserId(car.getUserId());
                         vcsWarning.setNvehicleId(car.getId());
+                        vcsWarning.setRecordId(vcsRecord.getId());
                         vcsWarningService.save(vcsWarning);
                         vcsRecord.setType(1);
                         vcsRecordService.updateById(vcsRecord);
