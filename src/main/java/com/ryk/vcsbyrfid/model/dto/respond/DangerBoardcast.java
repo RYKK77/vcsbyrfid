@@ -9,6 +9,7 @@ public class DangerBoardcast {
     public String recordTime;
     public String recordBayonet;
     public String recordCause;
+    public String carNumber;
     // 处理状态
     public Integer handleStatus;
 }

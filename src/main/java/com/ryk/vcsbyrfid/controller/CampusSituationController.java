@@ -152,6 +152,7 @@ public class CampusSituationController {
                 VcsDevice device = vcsDeviceService.getById(vcsWarning.getDeviceId());
                 dangerBoardcasts[i].setRecordBayonet(device.getDName());
                 dangerBoardcasts[i].setRecordCause(vcsWarning.getWarningContent());
+                dangerBoardcasts[i].setCarNumber(vcsNvehicleService.getById(vcsWarning.getNvehicleId()).getCarNumber());
                 dangerBoardcasts[i].setHandleStatus(0);
             }
         }
