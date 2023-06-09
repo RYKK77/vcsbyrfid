@@ -54,6 +54,8 @@ public class VcsWarning implements Serializable {
      */
     private Long deviceId;
 
+    private Long recordId;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

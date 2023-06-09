@@ -12,11 +12,12 @@
             <result property="userId" column="userId" jdbcType="BIGINT"/>
             <result property="nvehicleId" column="nvehicleId" jdbcType="BIGINT"/>
             <result property="deviceId" column="deviceId" jdbcType="BIGINT"/>
+            <result property="recordId" column="recordId" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,warningContent,warningType,
         createdTime,userId,nvehicleId,
-        deviceId
+        deviceId,recordId
     </sql>
 </mapper>

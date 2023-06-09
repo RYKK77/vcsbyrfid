@@ -66,6 +66,7 @@ public class FindTagCycle {
                 vcsRecord.setNvehicleId(car.getId());
                 vcsRecord.setDeviceId(1L);
                 vcsRecordService.save(vcsRecord);
+
                 //创建一个任务对象【检测是否在未授权区域】多线程节省时间
                 Runnable target = () -> {
                     Long userId = car.getUserId();
@@ -86,6 +87,8 @@ public class FindTagCycle {
                             vcsWarning.setUserId(car.getUserId());
                             vcsWarning.setNvehicleId(car.getId());
                             vcsWarningService.save(vcsWarning);
+                            vcsRecord.setType(1);
+                            vcsRecordService.updateById(vcsRecord);
 //
 //                                VcsRecord vcsRecord = new VcsRecord();
 //                                vcsRecord.setType(2);
@@ -119,6 +122,8 @@ public class FindTagCycle {
                         vcsWarning.setUserId(car.getUserId());
                         vcsWarning.setNvehicleId(car.getId());
                         vcsWarningService.save(vcsWarning);
+                        vcsRecord.setType(1);
+                        vcsRecordService.updateById(vcsRecord);
                     }
                 } else {
                     String useRange = car.getUseRange();
@@ -155,6 +160,8 @@ public class FindTagCycle {
                         vcsWarning.setUserId(car.getUserId());
                         vcsWarning.setNvehicleId(car.getId());
                         vcsWarningService.save(vcsWarning);
+                        vcsRecord.setType(1);
+                        vcsRecordService.updateById(vcsRecord);
                     }
                 }
 
